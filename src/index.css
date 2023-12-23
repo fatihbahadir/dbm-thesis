@@ -1,3 +1,15 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:root {
+    --toastify-icon-color-info: #6777ED;
+    --toastify-icon-color-success: #6777ED;
+    --toastify-icon-color-warning: #6777ED;
+    --toastify-icon-color-error: #6777ED;
+    --toastify-color-progress-info: var(--toastify-color-info);
+    --toastify-color-progress-success: var(--toastify-color-success);
+    --toastify-color-progress-warning: var(--toastify-color-warning);
+    --toastify-color-progress-error: var(--toastify-color-error);
+  
+}

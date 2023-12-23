@@ -5,6 +5,7 @@ import useAuth from "../hooks/useAuth";
 import useInput from "../hooks/useInput";
 import { toast } from "react-toastify";
 import axios from "../api/axios";
+import useToggle from "../hooks/useToggle";
 
 const LOGIN_URL = "/api/v1/auth/authenticate";
 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -15,12 +16,12 @@ const Login = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const from = location.state?.from?.pathname || "/";
-  
 
   const [user, resetUser, userAttribs] = useInput("user", "");
   const [loading, setLoading] = useState();
   const [pwd, setPwd] = useState("");
   const [errMsg, setErrMsg] = useState("");
+  const [check, toggleCheck] = useToggle("persist", false);
 
   useEffect(() => {
     setErrMsg("");
@@ -29,13 +30,13 @@ const Login = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
     setLoading(true);
-    if(!emailRegex.test(user)){
-      toast.error('Please enter a valid email!')
+    if (!emailRegex.test(user)) {
+      toast.error("Please enter a valid email!");
       setLoading(false);
       return;
     }
-    if(pwd.trim() === ""){
-      toast.error('Please enter a password!')
+    if (pwd.trim() === "") {
+      toast.error("Please enter a password!");
       setLoading(false);
       return;
     }
@@ -54,14 +55,15 @@ const Login = () => {
         }
       );
       const accessToken = response?.data?.access_token;
+      console.log(accessToken);
       setAuth({ user, accessToken });
-      console.log('auth', auth)
+      console.log("auth", auth);
       setLoading(false);
       navigate(from, { replace: true });
     } catch (err) {
       toast.error("Username or password is wrong");
-      resetUser()
-      setPwd('');
+      resetUser();
+      setPwd("");
       setLoading(false);
     }
   };
@@ -103,6 +105,17 @@ const Login = () => {
             </div>
           </div>
 
+          <div className="px-5 flex items-center gap-3 py-3">
+            <input
+              type="checkbox"
+              className="w-4 h-4 accent-main transition focus:border-none focus:outline-none"
+              onChange={toggleCheck}
+              id="persist"
+              checked={check}
+            />
+            <span className="text-grayUpdated text-sm "> Remember me</span>
+          </div>
+
           <div className="p-5">
             <button
               onClick={handleLogin}
@@ -110,10 +123,9 @@ const Login = () => {
               disabled={loading}
               className="disabled:bg-gray-300 w-full font-semibold bg-main text-white hover:bg-mainHover transition py-2 text-sm rounded"
             >
-              {loading ? 'Loading ...' : 'Login'}
+              {loading ? "Loading ..." : "Login"}
             </button>
           </div>
-
         </div>
 
         <div className="text-sm">

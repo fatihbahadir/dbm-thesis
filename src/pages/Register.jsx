@@ -1,8 +1,110 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Logo from "../assets/logo.png";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "../api/axios";
+import { toast } from "react-toastify";
+
+const REGISTER_URL = '/api/v1/auth/register';
+const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 const Register = () => {
+  const [registerForm, setRegisterForm] = useState({
+    firstname: '',
+    lastname: '',
+    email: '',
+    password: '',
+    birth_year: 2002,
+    gender: 'MALE',
+    profession_id: 1
+  })
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
+
+  const handleRegister = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+
+    if(!registerForm.firstname) {
+      toast.error('Firstname can not be empty!')
+      setLoading(false);
+      return;
+    }
+
+    if(!registerForm.lastname) {
+      toast.error('Lastname can not be empty!')
+      setLoading(false);
+      return;
+    }
+
+    if(!registerForm.password) {
+      toast.error('Password can not be empty!')
+      setLoading(false);
+      return;
+    }
+
+    if (!emailRegex.test(registerForm.email)) {
+      toast.error("Please enter a valid email!");
+      setLoading(false);
+      return;
+    }
+    if (!registerForm.birth_year) {
+      toast.error("Birth Year can not be empty!");
+      setLoading(false);
+      return;
+    }
+    if (!registerForm.gender) {
+      toast.error("Please select a gender!");
+      setLoading(false);
+      return;
+    }
+
+    if (!registerForm.profession_id) {
+      toast.error("Please select a Profession!");
+      setLoading(false);
+      return;
+    }
+
+    setRegisterForm({
+      firstname: '',
+      lastname: '',
+      email: '',
+      password: '',
+      birth_year: 2002,
+      gender: 'MALE',
+      profession_id: 1
+    })
+
+    await axios.post(REGISTER_URL, {
+      firstname: registerForm.firstname,
+      lastname: registerForm.lastname,
+      email: registerForm.email,
+      password: registerForm.password,
+      birth_year: parseInt(registerForm.birth_year),
+      gender: registerForm.gender,
+      profession_id: parseInt(registerForm.profession_id)
+    }).then((res)=>{
+      toast.success('Registered succesfully')
+      setTimeout(()=>{
+        navigate('/login')
+      }, 5000)
+    }).catch((err)=> {
+      toast.error('An error occured please try again')
+    })
+  }
+  
+  useEffect(()=>{
+    console.log(registerForm);
+  }, [registerForm])
+
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setRegisterForm({
+      ...registerForm,
+      [name]: value,
+    });
+  };
+
   return (
     <div className="max-w-screen min-h-screen flex items-center justify-center overflow-x-hidden">
       <div className="flex flex-col gap-6 items-center justify-center pt-20 pb-12">
@@ -17,58 +119,72 @@ const Register = () => {
           <div className="p-5 flex flex-col gap-4">
             <div className="flex flex-row gap-6">
               <div className="flex flex-col gap-1">
-                <label for="firstName" className="text-sm font-semibold">
+                <label htmlFor="firstname" className="text-sm font-semibold">
                   First Name
                 </label>
                 <input
-                  id="firstName"
+                  name="firstname"
+                  id="firstname"
+                  value={registerForm.firstname}
+                  onChange={handleInputChange}
                   type="text"
                   className="bg-[#FDFDFF] border border-[#e4e6fc] rounded w-full py-2 px-3 transition outline-none focus:border-main"
                 />
               </div>
               <div className="flex flex-col gap-1">
-                <label for="lastName" className="text-sm font-semibold">
+                <label htmlFor="lastname" className="text-sm font-semibold">
                   Last Name
                 </label>
                 <input
-                  id="lastName"
+                  name="lastname"
+                  id="lastname"
+                  value={registerForm.lastname}
+                  onChange={handleInputChange}
                   type="text"
                   className="bg-[#FDFDFF] border border-[#e4e6fc] rounded w-full py-2 px-3 transition outline-none focus:border-main"
                 />
               </div>
             </div>
             <div className="flex flex-col gap-1">
-              <label for="email" className="text-sm font-semibold">
+              <label htmlFor="email" className="text-sm font-semibold">
                 Email
               </label>
               <input
                 id="email"
+                name="email"
                 type="email"
+                value={registerForm.email}
+                onChange={handleInputChange}
                 className="bg-[#FDFDFF] border border-[#e4e6fc] rounded w-full py-2 px-3 transition outline-none focus:border-main"
               />
             </div>
             <div className="flex flex-row gap-6">
               <div className="flex flex-col gap-1 w-full">
-                <label for="password" className="text-sm font-semibold">
+                <label htmlFor="password" className="text-sm font-semibold">
                   Password
                 </label>
                 <input
                   id="password"
+                  name="password"
                   type="password"
+                  value={registerForm.password}
+                  onChange={handleInputChange}
                   className="bg-[#FDFDFF] border border-[#e4e6fc] rounded w-full py-2 px-3 transition outline-none focus:border-main"
                 />
               </div>
               <div className="flex flex-col gap-1 w-full">
-                <label for="birthYear" className="text-sm font-semibold">
+                <label htmlFor="birth_year" className="text-sm font-semibold">
                   Birth Year
                 </label>
                 <input
-                  id="birthYear"
+                  name="birth_year"
+                  id="birth_year"
                   type="number"
                   min="1900"
                   max="2024"
                   step="1"
-                  value="2002"
+                  value={registerForm.birth_year}
+                  onChange={handleInputChange}
                   className="bg-[#FDFDFF] border border-[#e4e6fc] rounded w-full py-2 px-3 transition outline-none focus:border-main"
                 />
               </div>
@@ -76,23 +192,28 @@ const Register = () => {
 
             <div className="flex flex-row gap-6">
               <div className="flex flex-col gap-1 w-full">
-                <label for="gender" className="text-sm font-semibold">
+                <label htmlFor="gender" className="text-sm font-semibold">
                   Gender
                 </label>
                 <select
                   id="gender"
+                  name="gender"
+                  onChange={handleInputChange}
                   className="bg-[#FDFDFF] border border-[#e4e6fc] rounded w-full py-2 px-3 transition outline-none focus:border-main"
                 >
-                  <option value="male">Male</option>
-                  <option value="female">Female</option>
-                  <option value="other">Other</option>
+                  <option value="MALE">Male</option>
+                  <option value="FEMALE">Female</option>
+                  <option value="OTHER">Other</option>
                 </select>
               </div>
               <div className="flex flex-col gap-1 w-full">
-                <label for="profession" className="text-sm font-semibold">
+                <label htmlFor="profession" className="text-sm font-semibold">
                   Profession
                 </label>
                 <select
+                  name="profession_id"
+                  value={registerForm.profession_id}
+                  onChange={handleInputChange}
                   id="profession"
                   className="bg-[#FDFDFF] border border-[#e4e6fc] rounded w-full py-2 px-3 transition outline-none focus:border-main"
                 >
@@ -108,7 +229,7 @@ const Register = () => {
             </div>
           </div>
           <div className="p-5">
-          <button style={{boxShadow: '0 2px 6px #acb5f6'}} className="w-full font-semibold bg-main text-white hover:bg-mainHover transition py-2 text-sm rounded">
+          <button onClick={handleRegister} style={{boxShadow: '0 2px 6px #acb5f6'}} className="w-full font-semibold bg-main text-white hover:bg-mainHover transition py-2 text-sm rounded">
             Register
           </button>
         </div>
