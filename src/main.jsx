@@ -5,11 +5,14 @@ import "./index.css";
 import { BrowserRouter } from "react-router-dom";
 import "react-toastify/dist/ReactToastify.css";
 import { AuthProvider } from "./context/AuthProvider.jsx";
+import { ThesisProvider } from "./context/ThesisProvider.jsx";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <BrowserRouter>
     <AuthProvider>
-      <App />
+      <ThesisProvider>
+        <App/>
+      </ThesisProvider>
     </AuthProvider>
   </BrowserRouter>
 );
