@@ -7,6 +7,8 @@ import UsersCompnent from '../components/UsersCompnent';
 import useThesis from '../hooks/useThesis';
 import Avatar  from '../assets/avatar.png';
 import Avatar2  from '../assets/avatar-2.png';
+import RecentTheses from '../components/RecentTheses';
+import MyThesis from '../components/MyThesis';
 
 const Home = () => {
   const { auth } = useAuth();
@@ -73,8 +75,18 @@ const Home = () => {
         ))
       }
     </div>
+    <div className='grid grid-rows-2 lg:grid-rows-1 grid-cols-1 lg:grid-cols-6 w-full gap-12 mt-12'>
+      <div className='col-span-6 lg:col-span-4'>
+      <UsersCompnent/>
+      </div>
+      <div className='col-span-6 lg:col-span-2'>
+       <MyThesis/>
+      </div>
+    </div>
 
-    <UsersCompnent/>
+    <div className='grid grid-cols-1 mt-12'>
+    <RecentTheses/>
+    </div>
     
     </>
   )
