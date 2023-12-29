@@ -7,9 +7,11 @@ import {
 import { Link } from "react-router-dom";
 import axios from "../api/axios";
 import useAuth from "../hooks/useAuth";
+import useThesis from '../hooks/useThesis';
 
 const MyThesis = () => {
     const { auth } = useAuth();
+    const {myThesis ,setMyThesis} = useThesis();
     const [thesesLength, setThesesLength] = useState();
     useEffect(()=>{
         axios.get('/api/v1/thesis/my', {
@@ -19,6 +21,7 @@ const MyThesis = () => {
         }).
         then((res)=>{
           setThesesLength(res.data.data.length)
+          setMyThesis(res.data.data)
           })
         .catch(err=>console.log(err)) 
 }, [])
