@@ -1,11 +1,13 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { FaBars, FaRegUser, FaSearch, FaSignOutAlt, FaUser, FaUserAlt, FaUserAltSlash } from 'react-icons/fa';
 import Avatar from '../assets/avatar.png';
+import useLogout from '../hooks/useLogout';
 
 const NavBar = ({ toggle, setToggle }) => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [searchBarOpen, setSearchBarOpen] = useState(false);
   const [inputOpen, setInputOpen] = useState(false);
+  const logout = useLogout();
 
 
   const dropdownRef = useRef(null);
@@ -40,6 +42,10 @@ const NavBar = ({ toggle, setToggle }) => {
     };
   }, []);
 
+  const getUser = () => {
+    axios.get()
+  }
+
 
   function useOutsideAlerter(ref, action) {
     useEffect(() => {
@@ -72,7 +78,7 @@ const NavBar = ({ toggle, setToggle }) => {
             <input
               type="text"
               placeholder="Search..."
-              className="pl-[30px] py-[10px] pr-0 min-h-[46px] transition-all border-r-0 rounded rounded-r-none focus:outline-none z-[990 w-full md:w-[250px] "
+              className="pl-[30px] py-[10px] pr-0 min-h-[46px] transition-all border-r-0 rounded rounded-r-none focus:outline-none z-[990] w-full md:w-[250px] "
             />
             <button className='bg-white min-h-[46px] rounded rounded-l-none border-l-0 p-[8px] z-[990]'>
               <FaSearch />
@@ -111,7 +117,7 @@ const NavBar = ({ toggle, setToggle }) => {
                   <FaRegUser />
                   Profile
                 </li>
-                <li className='py-1 px-3 flex items-center justify-center gap-3 text-sm text-red-500'>
+                <li onClick={logout} className='py-1 px-3 flex items-center justify-center gap-3 text-sm text-red-500'>
                   <FaSignOutAlt />
                   Logout
                 </li>

@@ -6,13 +6,16 @@ import { BrowserRouter } from "react-router-dom";
 import "react-toastify/dist/ReactToastify.css";
 import { AuthProvider } from "./context/AuthProvider.jsx";
 import { ThesisProvider } from "./context/ThesisProvider.jsx";
+import { UserProvider } from "./context/UserProvider.jsx";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <BrowserRouter>
     <AuthProvider>
-      <ThesisProvider>
-        <App/>
-      </ThesisProvider>
+      <UserProvider>
+        <ThesisProvider>
+          <App/>
+        </ThesisProvider>
+      </UserProvider>
     </AuthProvider>
   </BrowserRouter>
 );
