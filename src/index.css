@@ -25,3 +25,11 @@
         scrollbar-width: none;  /* Firefox */
   }
 }
+
+
+/* Özel stil tanımı */
+.tailwind-auto-border {
+    display: inline-block; /* Başlık uzunluğuna göre genişlik alabilmek için */
+    border-bottom-width: 2px; /* Örnek olarak 2px border kalınlığı */
+  }
+  

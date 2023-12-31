@@ -10,10 +10,11 @@ import RequireAuth from "./components/RequireAuth";
 import MainLayout from "./layouts/MainLayout";
 import AddNewThesis from "./pages/AddNewThesis";
 import Thesis from './pages/Thesis';
+import ThesisDetail from "./pages/ThesisDetail";
 
 function App() {
   return (
-    <div className="font-nunito">
+    <div className="font-nunito ">
       <Routes>
         {/* Public Routes */}
         <Route path="/login" index element={<Login />} />
@@ -29,8 +30,13 @@ function App() {
             <Route path="/thesis" element={<Thesis/>} />
           </Route>
           <Route element={<RequireAuth allowedRoles={["MANAGER", "USER"]}/>}>
+            <Route path="/thesis-detail/:thesisId" element={<ThesisDetail/>} />
+          </Route>
+        
+          <Route element={<RequireAuth allowedRoles={["MANAGER", "USER"]}/>}>
             <Route path="/add-thesis" element={<AddNewThesis/>} />
           </Route>
+
 
           </Route>
         </Route>

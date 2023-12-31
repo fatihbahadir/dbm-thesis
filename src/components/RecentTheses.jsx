@@ -1,10 +1,12 @@
 import React, { useEffect } from "react";
 import { FaArrowRight } from "react-icons/fa";
 import useThesis from "../hooks/useThesis";
+import { useNavigate } from "react-router-dom";
 
 const RecentTheses = () => {
 
   const { theses, setTheses } = useThesis();
+  const navigate = useNavigate();
 
   useEffect(()=>{
     console.log(theses)
@@ -21,6 +23,7 @@ const RecentTheses = () => {
         <h2 className="text-base font-bold text-grayUpdated">Last Theses</h2>
         <button
           style={{ boxShadow: "0 2px 6px #fd9b96" }}
+          onClick={()=>navigate('/thesis')}
           className="flex font-semibold gap-2 items-center justify-center px-4 py-2 bg-[#fc544b] hover:bg-[#fb160a] transition tracking-wide text-white rounded-[30px] text-sm"
         >
           View More <FaArrowRight />
@@ -59,7 +62,7 @@ const RecentTheses = () => {
                     <td class="whitespace-nowrap px-6 py-4">{these.title}</td>
                     <td class="whitespace-nowrap px-6 py-4">{these.university.university_name}</td>
                     <td class="whitespace-nowrap px-6 py-4">{formatDate(these.submission_date)}</td>
-                    <td class="whitespace-nowrap px-6 py-4"><button style={{boxShadow: '0 2px 6px #acb5f6'}} className="bg-main font-semibold transition-all hover:bg-mainHover text-sm py-[.3rem] px-[.8rem] tracking-wide text-white rounded-[.25rem]">Detail</button></td>
+                    <td onClick={()=>navigate(`/thesis-detail/${these.thesis_id}`)} class="whitespace-nowrap px-6 py-4"><button style={{boxShadow: '0 2px 6px #acb5f6'}} className="bg-main font-semibold transition-all hover:bg-mainHover text-sm py-[.3rem] px-[.8rem] tracking-wide text-white rounded-[.25rem]">Detail</button></td>
 
                   </tr>
                 ))

@@ -9,12 +9,15 @@ import Avatar  from '../assets/avatar.png';
 import Avatar2  from '../assets/avatar-2.png';
 import RecentTheses from '../components/RecentTheses';
 import MyThesis from '../components/MyThesis';
+import { useNavigate } from 'react-router-dom';
 
 const Home = () => {
   const { auth } = useAuth();
   const {theses, setTheses} = useThesis();
+  const navigate = useNavigate();
 
   useEffect(()=>{
+      theses.length < 1 &&
           axios.get('/api/v1/thesis', {
               headers: {
                   Authorization: `Bearer ${auth.accessToken}`,
@@ -43,7 +46,7 @@ const Home = () => {
     <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 w-full gap-12'>
       {
         theses.slice().sort(() => Math.random() - 0.5).slice(0, 3).map((these) => (
-      <div key={these.thesis_id} className='bg-white rounded shadow flex justify-center p-5  flex-col gap-6'>
+      <div key={these.thesis_id} onClick={()=>navigate(`/thesis-detail/${these.thesis_id}`)} className='bg-white rounded shadow flex justify-center p-5  flex-col gap-6 transition-all duration-300 cursor-pointer hover:shadow-xl'>
         <div className='flex gap-3 text-xs  text-[#34395e] font-semibold'>
             <div className='uppercase tracking'>
               {these.institute.institute_name.slice(13)}

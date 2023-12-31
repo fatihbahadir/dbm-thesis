@@ -1,14 +1,23 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { FaBars, FaRegUser, FaSearch, FaSignOutAlt, FaUser, FaUserAlt, FaUserAltSlash } from 'react-icons/fa';
+import { FaArrowUp, FaBars, FaCaretSquareUp, FaCaretUp, FaRegUser, FaSearch, FaSignOutAlt, FaUser, FaUserAlt, FaUserAltSlash } from 'react-icons/fa';
 import Avatar from '../assets/avatar.png';
 import useLogout from '../hooks/useLogout';
+import useUser from '../hooks/useUser';
+import axios from '../api/axios';
+import useAuth from '../hooks/useAuth';
+import useThesis from '../hooks/useThesis';
 
 const NavBar = ({ toggle, setToggle }) => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [searchBarOpen, setSearchBarOpen] = useState(false);
-  const [inputOpen, setInputOpen] = useState(false);
+  const [inputOpen, setInputOpen] = useState();
+  const [searchInput, setSearchInput] = useState();
+  const [inputDropdownOpen, setInputDropdownOpen] = useState(false);
+  const { theses, setTheses } = useThesis();
+  const [filteredTheses, setFilteredTheses] = useState([]);
   const logout = useLogout();
-
+  const {user, setUser} = useUser();
+  const { auth } = useAuth();
 
   const dropdownRef = useRef(null);
   const searchBarRef = useRef(null);
@@ -17,12 +26,25 @@ const NavBar = ({ toggle, setToggle }) => {
     setDropdownOpen(!dropdownOpen);
   };
 
+  const toggleInputDropdown = () => {
+    setInputDropdownOpen(!inputDropdownOpen);
+  };
+
   const toggleSearchBar = () => {
     if (window.innerWidth >= 768) return;
     setSearchBarOpen(!searchBarOpen);
     setDropdownOpen(false);
     setInputOpen(!inputOpen);
   };
+
+  const filterTheses = () =>{
+    const filteredArray =  theses.filter((these)=> these.title?.toLowerCase().includes(searchInput?.toLowerCase()))
+    setFilteredTheses(filteredArray);
+  }
+
+  useEffect(()=>{
+    filterTheses();
+  }, [searchInput])
 
 
   useEffect(() => {
@@ -42,10 +64,17 @@ const NavBar = ({ toggle, setToggle }) => {
     };
   }, []);
 
-  const getUser = () => {
-    axios.get()
-  }
-
+  useEffect(()=>{
+    axios.get('/api/v1/user/current', {
+        headers: {
+            Authorization: `Bearer ${auth.accessToken}`,
+        },
+    }).
+    then((res)=>{
+      setUser(res.data.data)
+      })
+    .catch(err=>console.log(err)) 
+}, [])
 
   function useOutsideAlerter(ref, action) {
     useEffect(() => {
@@ -79,10 +108,33 @@ const NavBar = ({ toggle, setToggle }) => {
               type="text"
               placeholder="Search..."
               className="pl-[30px] py-[10px] pr-0 min-h-[46px] transition-all border-r-0 rounded rounded-r-none focus:outline-none z-[990] w-full md:w-[250px] "
+              onClick={toggleInputDropdown}
+              value={searchInput}
+              onChange={(e)=>setSearchInput(e.target.value)}
+
             />
             <button className='bg-white min-h-[46px] rounded rounded-l-none border-l-0 p-[8px] z-[990]'>
               <FaSearch />
             </button>
+            {inputDropdownOpen && (
+              <>
+            <div className='dropdown-menu absolute top-16 mt-2 z-[990] rounded-md bg-white overflow-hidden transition duration-300 transform scale-y-100 opacity-100 w-full sm:w-auto'>
+              <ul className='p-5 flex flex-col gap-3 items-center justify-center'>
+                  {
+                    filteredTheses.map((filtered)=>(
+                      <h2>{filtered.title}</h2>
+                    ))
+                  }
+                </ul>
+            </div>
+                       <div
+                       className='fixed inset-0 bg-black bg-opacity-50 z-[980] transition-opacity duration-700'
+                       onClick={() => {
+                         setInputDropdownOpen(false)
+                       }}
+                     />
+                </>
+          )}
             {inputOpen && (
               <div
                 className='fixed inset-0 bg-black bg-opacity-50 z-[980] transition-opacity duration-700'
@@ -105,7 +157,7 @@ const NavBar = ({ toggle, setToggle }) => {
             <div className='px-[15px] h-full flex flex-row items-center justify-center after:inline-block after:w-0 after:h-0 after:ml-[0.255em] after:content-[""] after:border-t-[0.3em] after:border-solid after:border-r-[0.3em] after:border-b-0 after:border-l-[.3em] after:border-r-transparent after:border-l-transparent'>
               <img src={Avatar} className='mr-[.5rem] align-middle w-[30px] h-[30px] rounded-full' alt='Avatar' />
               <div className='text-white font-semibold'>
-                Hi, Fatih Bahadır
+                Hi, {user?.firstname} {user?.lastname}
               </div>
             </div>
             <div

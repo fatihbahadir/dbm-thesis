@@ -39,7 +39,7 @@ const MyThesis = () => {
       <div className="z-[3]">
         <h4 className="text-[4rem] text-white">{thesesLength}</h4>
         <p className="text-white text-xl">
-          Theses you have, {" "}
+          Thes{thesesLength > 1 ? 'e' : 'i'}s you have, {" "}
           <Link className="text-white text-xl hover:text-mainHover transition-all" href="">
             add new one
           </Link>{" "}
