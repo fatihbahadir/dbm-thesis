@@ -23,17 +23,17 @@ function App() {
         {/* Protected Routes */}
         <Route element={<PersistLogin />}>
           <Route element={<MainLayout/>}>
-          <Route element={<RequireAuth allowedRoles={["MANAGER", "USER"]} />}>
+          <Route element={<RequireAuth allowedRoles={["MANAGER", "USER", "ADMIN"]} />}>
             <Route path="/" element={<Home />} />
           </Route>
-          <Route element={<RequireAuth allowedRoles={["MANAGER", "USER"]} />}>
+          <Route element={<RequireAuth allowedRoles={["MANAGER", "USER", "ADMIN"]} />}>
             <Route path="/thesis" element={<Thesis/>} />
           </Route>
-          <Route element={<RequireAuth allowedRoles={["MANAGER", "USER"]}/>}>
+          <Route element={<RequireAuth allowedRoles={["MANAGER", "USER", "ADMIN"]}/>}>
             <Route path="/thesis-detail/:thesisId" element={<ThesisDetail/>} />
           </Route>
         
-          <Route element={<RequireAuth allowedRoles={["MANAGER", "USER"]}/>}>
+          <Route element={<RequireAuth allowedRoles={["MANAGER", "USER", "ADMIN"]}/>}>
             <Route path="/add-thesis" element={<AddNewThesis/>} />
           </Route>
 
