@@ -3,9 +3,10 @@ import axios from "../api/axios";
 import useAuth from "../hooks/useAuth";
 import Avatar from '../assets/avatar.png';
 import Avatar2 from '../assets/avatar-2.png';
+import useUser from '../hooks/useUser';
 
 const UsersComponent = () => {
-  const [users, setUsers] = useState();
+  const {users, setUsers} = useUser();
   const [numDots, setNumDots] = useState(0);
   const { auth } = useAuth();
   const contentRef = useRef(null);
@@ -22,7 +23,7 @@ const UsersComponent = () => {
   }
 
   useEffect(() => {
-    getUsers();
+      getUsers()
   }, []); 
 
   const handleScroll = (scrollOffset) => {

@@ -7,17 +7,9 @@ import { useNavigate } from "react-router-dom";
 const Thesis = () => {
   const [filteredTheses, setFilteredTheses] = useState([]);
   const [showFilters, setShowFilters] = useState(false);
-  const { theses, setTheses } = useThesis();
+  const { theses, setTheses, thesisParams, setThesisParams } = useThesis();
   const navigate = useNavigate();
-  const [params, setParams] = useState({
-    subjects: [],
-    keywords: [],
-    universities: [],
-    institutes: [],
-    languages: [],
-    types: [],
-    users: [],
-  });
+
   const [loading, setLoading] = useState();
   const { auth } = useAuth();
 
@@ -71,7 +63,7 @@ const Thesis = () => {
       });
 
       console.log(subjectsResponse.data.data);
-      setParams((prevParams) => ({
+      setThesisParams((prevParams) => ({
         ...prevParams,
         subjects: subjectsResponse.data.data,
       }));
@@ -83,7 +75,7 @@ const Thesis = () => {
       });
 
       console.log(keywordsResponse.data.data);
-      setParams((prevParams) => ({
+      setThesisParams((prevParams) => ({
         ...prevParams,
         keywords: keywordsResponse.data.data,
       }));
@@ -95,7 +87,7 @@ const Thesis = () => {
       });
 
       console.log(universitiesResponse.data.data);
-      setParams((prevParams) => ({
+      setThesisParams((prevParams) => ({
         ...prevParams,
         universities: universitiesResponse.data.data,
       }));
@@ -107,7 +99,7 @@ const Thesis = () => {
       });
 
       console.log(instituteResponse.data.data);
-      setParams((prevParams) => ({
+      setThesisParams((prevParams) => ({
         ...prevParams,
         institutes: instituteResponse.data.data,
       }));
@@ -119,7 +111,7 @@ const Thesis = () => {
       });
 
       console.log(langaugeResponse.data.data);
-      setParams((prevParams) => ({
+      setThesisParams((prevParams) => ({
         ...prevParams,
         languages: langaugeResponse.data.data,
       }));
@@ -131,7 +123,7 @@ const Thesis = () => {
       });
 
       console.log(typeResponse.data.data);
-      setParams((prevParams) => ({
+      setThesisParams((prevParams) => ({
         ...prevParams,
         types: typeResponse.data.data,
       }));
@@ -144,7 +136,7 @@ const Thesis = () => {
   };
 
   useEffect(() => {
-    getAllParams();
+    thesisParams.subjects.length < 1 &&   getAllParams();
   }, []);
 
   useEffect(() => {
@@ -183,7 +175,7 @@ const Thesis = () => {
             Subjects
           </span>
           <div className="flex flex-col h-full">
-            {params.subjects.map((subject) => (
+            {thesisParams.subjects.map((subject) => (
               <label
                 key={subject.subject_id}
                 className="inline-flex items-center mt-2 text-sm"
@@ -214,7 +206,7 @@ const Thesis = () => {
             Keywords
           </span>
           <div className="flex flex-col h-full">
-            {params.keywords.map((keyword) => (
+            {thesisParams.keywords.map((keyword) => (
               <label
                 key={keyword.keyword_id}
                 className="inline-flex items-center mt-2 text-sm"
@@ -246,7 +238,7 @@ const Thesis = () => {
             Universities
           </span>
           <div className="flex flex-col h-full">
-            {params.universities.map((university) => (
+            {thesisParams.universities.map((university) => (
               <label
                 key={university.university_id}
                 className="inline-flex items-center mt-2 text-sm"
@@ -280,7 +272,7 @@ const Thesis = () => {
             Institutes
           </span>
           <div className="flex flex-col h-full">
-            {params.institutes.map((institute) => (
+            {thesisParams.institutes.map((institute) => (
               <label
                 key={institute.institute_id}
                 className="inline-flex items-center mt-2 text-sm"
@@ -312,7 +304,7 @@ const Thesis = () => {
             Types
           </span>
           <div className="flex flex-col h-full">
-            {params.types.map((type) => (
+            {thesisParams.types.map((type) => (
               <label
                 key={type.thesis_type_id}
                 className="inline-flex items-center mt-2 text-sm"
@@ -344,7 +336,7 @@ const Thesis = () => {
             Languages
           </span>
           <div className="flex flex-col h-full">
-            {params.languages.map((language) => (
+            {thesisParams.languages.map((language) => (
               <label
                 key={language.thesis_language_id}
                 className="inline-flex items-center mt-2 text-sm"

@@ -7,10 +7,18 @@ const ThesisContext = createContext({});
 export const ThesisProvider = ({ children }) => {
     const [theses, setTheses] = useState([]);
     const [myTheses, setMyTheses] = useState([])
-
+    const [thesisParams, setThesisParams] = useState({
+        subjects: [],
+        keywords: [],
+        universities: [],
+        institutes: [],
+        languages: [],
+        types: [],
+        users: [],
+      });
 
     return (
-        <ThesisContext.Provider value={{ theses, setTheses, myTheses, setMyTheses }}>
+        <ThesisContext.Provider value={{ theses, setTheses, myTheses, setMyTheses, thesisParams, setThesisParams }}>
             {children}
         </ThesisContext.Provider>
     )
