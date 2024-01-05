@@ -43,7 +43,7 @@ const Sidebar = ({toggle, setToggle}) => {
  <div
       ref={sidebarRef}
       style={{ boxShadow: "0 4px 8px rgba(0,0,0,0.3)" }}
-      className={`${toggle ? '-translate-x-[250px] w-0' : 'translate-x-0 w-[250px]'}  overflow-hidden outline-none transition-all duration-600 fixed top-0 h-screen bg-[#fff] z-[880] left-0`}
+      className={`${toggle ? '-translate-x-[250px] w-0' : 'translate-x-0 w-[250px]'} overflow-y-scroll no-scrollbar overflow-hidden outline-none transition-all duration-600 fixed top-0 h-screen bg-[#fff] z-[880] left-0`}
     >
       <aside>
 
