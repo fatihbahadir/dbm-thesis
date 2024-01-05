@@ -6,6 +6,8 @@ import useUser from '../hooks/useUser';
 import axios from '../api/axios';
 import useAuth from '../hooks/useAuth';
 import useThesis from '../hooks/useThesis';
+import { useNavigate } from 'react-router-dom';
+
 
 const NavBar = ({ toggle, setToggle }) => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -18,6 +20,7 @@ const NavBar = ({ toggle, setToggle }) => {
   const logout = useLogout();
   const {user, setUser} = useUser();
   const { auth } = useAuth();
+  const navigate = useNavigate();
 
   const dropdownRef = useRef(null);
   const searchBarRef = useRef(null);
@@ -165,7 +168,7 @@ const NavBar = ({ toggle, setToggle }) => {
               className={`dropdown-menu origin-top-right shadow-xl absolute right-0 mt-2 rounded-md bg-white overflow-hidden transition duration-300 transform ${dropdownOpen ? 'scale-y-100 opacity-100' : 'scale-y-0 opacity-0'}`}
             >
               <ul className='p-5 flex flex-col gap-3 items-center justify-center'>
-                <li className='py-1 px-3 flex items-center justify-center gap-3 text-sm'>
+                <li onClick={()=>navigate(`/profile/${user.user_id}`)} className='py-1 px-3 flex items-center justify-center gap-3 text-sm'>
                   <FaRegUser />
                   Profile
                 </li>

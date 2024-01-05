@@ -11,6 +11,7 @@ import MainLayout from "./layouts/MainLayout";
 import AddNewThesis from "./pages/AddNewThesis";
 import Thesis from './pages/Thesis';
 import ThesisDetail from "./pages/ThesisDetail";
+import Profile from "./pages/Profile";
 import Manager from "./pages/Manager";
 import ManageTheses from "./pages/ManageTheses";
 import ManageProfessions from "./pages/ManageProfessions";
@@ -47,6 +48,10 @@ function App() {
         
           <Route element={<RequireAuth allowedRoles={["MANAGER", "USER", "ADMIN"]}/>}>
             <Route path="/add-thesis" element={<AddNewThesis/>} />
+          </Route>
+
+          <Route element={<RequireAuth allowedRoles={["MANAGER", "USER", "ADMIN"]}/>}>
+            <Route path="/profile/:userId" element={<Profile/>} />
           </Route>
 
           <Route element={<RequireAuth allowedRoles={["MANAGER", "ADMIN"]}/>}>
