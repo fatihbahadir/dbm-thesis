@@ -1,27 +1,46 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import useThesis from '../hooks/useThesis';
 import axios from '../api/axios';
 import useAuth from '../hooks/useAuth';
 import Avatar  from '../assets/avatar.png';
 import Avatar2  from '../assets/avatar-2.png';
+import ThesisModal from '../components/ThesisModal';
 
 const ManageTheses = () => {
-  const {theses, setTheses} = useThesis();
+  
+  const {theses, setTheses, thesisParams, setThesisParams} = useThesis();
   const { auth } = useAuth();
+  const [selectedThesis, setSelectedThesis] = useState(null);
+  const [isChanged, setIsChanged] = useState();
 
   useEffect(()=>{
-    theses.length < 1 &&
-        axios.get('/api/v1/thesis', {
-            headers: {
-                Authorization: `Bearer ${auth.accessToken}`,
-            },
-        }).
-        then((res)=>{
-          console.log(res.data.data)
-          setTheses(res.data.data)
-          })
-        .catch(err=>console.log(err)) 
-}, [])
+    theses.length < 1 && getThesis()
+  }, [])
+
+  useEffect(()=>{
+    isChanged && getThesis();
+  }, [isChanged])
+
+const getThesis = () => {
+  axios.get('/api/v1/thesis', {
+    headers: {
+        Authorization: `Bearer ${auth.accessToken}`,
+    },
+}).
+then((res)=>{
+  console.log(res.data.data)
+  setTheses(res.data.data)
+  })
+.catch(err=>console.log(err)) 
+}
+
+const openModal = (thesis) => {
+  setSelectedThesis(thesis);
+};
+
+const closeModal = () => {
+  setSelectedThesis(null);
+};
 
 const calcTime = (date) => {
   const currentDate = new Date();
@@ -34,11 +53,15 @@ const calcTime = (date) => {
   
 }
   return (
-    <div className='w-full h-full'>
+    <div className='w-full h-full overflow-hidden'>
+            {selectedThesis && (
+        <ThesisModal isChanged={isChanged} setIsChanged={setIsChanged} thesis={selectedThesis} closeModal={closeModal} />
+      )}
+
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mt-12">
        {
-        theses.map((these)=>(
-          <div key={these.thesis_id} className='bg-white rounded shadow flex justify-center p-5 m-6 flex-col gap-6 transition-all duration-300 cursor-pointer hover:shadow-xl'>
+        theses?.map((these)=>(
+          <div key={these.thesis_id} onClick={()=>setSelectedThesis(these)} className='bg-white rounded shadow flex justify-center p-5 m-6 flex-col gap-6 transition-all duration-300 cursor-pointer hover:shadow-xl'>
           <div className='flex gap-3 text-xs  text-[#34395e] font-semibold'>
               <div className='uppercase tracking'>
                 {these.institute.institute_name.slice(13)}
