@@ -11,6 +11,15 @@ import MainLayout from "./layouts/MainLayout";
 import AddNewThesis from "./pages/AddNewThesis";
 import Thesis from './pages/Thesis';
 import ThesisDetail from "./pages/ThesisDetail";
+import Manager from "./pages/Manager";
+import ManageTheses from "./pages/ManageTheses";
+import ManageProfessions from "./pages/ManageProfessions";
+import ManageInstitutes from "./pages/ManageInstitutes";
+import ManageUniversities from "./pages/ManageUniversities";
+import ManageSubjects from "./pages/ManageSubjects";
+import ManageKeywords from "./pages/ManageKeywords";
+import ManageTypes from "./pages/ManageTypes";
+import ManageLanguages from "./pages/ManageLanguages";
 
 function App() {
   return (
@@ -40,6 +49,18 @@ function App() {
             <Route path="/add-thesis" element={<AddNewThesis/>} />
           </Route>
 
+          <Route element={<RequireAuth allowedRoles={["MANAGER", "ADMIN"]}/>}>
+            <Route path="/manager" element={<Manager/>}>
+                <Route path="/manager/theses" element={<ManageTheses/>}/>
+                <Route path="/manager/professions" element={<ManageProfessions/>}/>
+                <Route path="/manager/institutes" element={<ManageInstitutes/>}/>
+                <Route path="/manager/universities" element={<ManageUniversities/>}/>
+                <Route path="/manager/subjects" element={<ManageSubjects/>}/>
+                <Route path="/manager/related-keywords" element={<ManageKeywords/>}/>
+                <Route path="/manager/thesis-types" element={<ManageTypes/>}/>
+                <Route path="/manager/thesis-languages" element={<ManageLanguages/>}/>
+              </Route>
+          </Route>
 
           </Route>
         </Route>

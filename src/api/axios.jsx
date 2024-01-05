@@ -1,8 +1,7 @@
 import axios from 'axios';
 
-const BASE_URL = 'https://dms-thesis.up.railway.app/'
-// http://localhost:8080
-
+const BASE_URL = ' http://localhost:8080'
+// https://dms-thesis.up.railway.app/
 export default axios.create({
     baseURL: BASE_URL,
 })
