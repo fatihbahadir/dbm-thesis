@@ -3,6 +3,8 @@ import useThesis from "../hooks/useThesis";
 import useAuth from "../hooks/useAuth";
 import axios from "../api/axios";
 import useUser from "../hooks/useUser";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 const AddNewThesis = () => {
   const { thesisParams, setThesisParams} = useThesis();
@@ -14,18 +16,18 @@ const AddNewThesis = () => {
   const [formData, setFormData] = useState({
     thesisNo: '',
     title: '',
-    university: '',
-    institute: '',
-    thesisType: '',
-    thesisLanguage: '',
-    numOfPages: '',
-    year: '',
-    supervisor: '',
-    cosupervisor: '',
+    university: '1',
+    institute: '1',
+    thesisType: '1',
+    thesisLanguage: '1',
+    numOfPages: '100',
+    year: '2024',
+    supervisor: '1',
+    cosupervisor: '2',
     abstract: '',
-    keywords: [],
-    subjects: [],
   })
+  const [disabled, setDisabled] = useState()
+  const navigate = useNavigate();
 
   const getUsers = () => {
     axios.get('/api/v1/user', {
@@ -139,10 +141,106 @@ const AddNewThesis = () => {
     return false
   }
 
+  const showError = (text) => {
+    setDisabled(true)
+    toast.error(text, {autoClose: 3000})
+    setTimeout(() => {
+      setDisabled(false)
+    }, 3500);
+  }
+
+  const showSuccess = (text) => {
+    setDisabled(true)
+    toast.success(text, {autoClose: 3000})
+    setTimeout(() => {
+      setDisabled(false)
+      navigate('/thesis')
+    }, 3500);
+  }
+
+
   const handleSave = () => {
-      if(isEmpty(formData.title, 5)) {
-        
+      if(isEmpty(formData.thesisNo?.trim(), 3) || formData.thesisNo?.trim().length > 7) {
+        showError('Thesis No can not be smaller then 3 letters or bigger than 7 letters.')
+        return
       }
+      if(isEmpty(formData.title?.trim(), 5)) {
+        showError('Title can not be smaller then 5 letters.')
+        return
+      }
+      if(formData.numOfPages?.trim() === '' || parseInt(formData.numOfPages) > 5000) {
+        showError('Number of pages can not be null or bigger than 5000')
+        return
+      }
+      if(formData.year?.trim() === '' || parseInt(formData.year) > 2024 || parseInt(formData.year < 1990)){
+        showError('Year can not be null, can not be bigger than 2024 or can not be smaller than 1990')
+        return
+      }
+      if(isEmpty(formData.abstract?.trim(), 300)) {
+        showError('Thesis abstract can not be smaller than 300 letters.')
+        return
+      }
+      if(selectedSubjects?.length < 1) {
+        showError('At least one subject must be selected');
+        return
+      }
+      if(formData.supervisor === formData.cosupervisor) {
+        showError('Supervisor and Co-supervisor can not be same')
+        return
+      }
+
+      console.log(formData, selectedKeywords, selectedSubjects)
+
+      axios
+      .post(
+        "/api/v1/thesis",
+        {
+          thesis_no: formData.thesisNo,
+          subject_ids: selectedSubjects,
+          related_keyword_ids: selectedKeywords,
+          title: formData.title,
+          abstract: formData.abstract,
+          year: parseInt(formData.year),
+          university_id: parseInt(formData.university),
+          institute_id: parseInt(formData.institute),
+          number_of_pages: parseInt(formData.numOfPages),
+          type_id: parseInt(formData.thesisType),
+          language_id: parseInt(formData.thesisLanguage),
+          supervisor_id: parseInt(formData.supervisor),
+          co_supervisor_id: parseInt(formData.cosupervisor)
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${auth.accessToken}`,
+            "Content-Type": "application/json",
+          },
+          withCredentials: true,
+        }
+      )
+      .then((res) => {
+        console.log(res);
+        setFormData({
+          thesisNo: '',
+          title: '',
+          university: '1',
+          institute: '1',
+          thesisType: '1',
+          thesisLanguage: '1',
+          numOfPages: '100',
+          year: '2024',
+          supervisor: '1',
+          cosupervisor: '2',
+          abstract: '',
+        })
+        setSelectedKeywords([])
+        setSelectedSubjects([])
+        showSuccess('Your thesis posted successfully')
+      })
+      .catch((err) => {
+        console.log(err);
+        showError("Sorry... we can't save your thesis now. It is about us... Please try again later")
+
+      });
   }
 
   useEffect(() => {
@@ -176,6 +274,8 @@ const AddNewThesis = () => {
                 className="py-2 px-4 h-[42px] bg-[#fdfdff] border-[#e4e6fc] border transition-all rounded w-full outline-none  focus:border-main"
                 value={formData.thesisNo}
                 onChange={(e)=>setFormData({...formData, thesisNo: e.target.value})}
+                disabled={disabled}
+
               />
             </div>
           </div>
@@ -189,6 +289,8 @@ const AddNewThesis = () => {
                 className="py-2 px-4 h-[42px] bg-[#fdfdff] border-[#e4e6fc] border transition-all rounded w-full outline-none  focus:border-main"
                 value={formData.title}
                 onChange={(e)=>setFormData({...formData, title: e.target.value})}
+                disabled={disabled}
+
               />
             </div>
           </div>
@@ -202,6 +304,8 @@ const AddNewThesis = () => {
                 className="py-2 px-4 h-[42px] bg-[#fdfdff] border-[#e4e6fc] border transition-all rounded w-full outline-none  focus:border-main"
                 value={formData.university}
                 onChange={(e)=>setFormData({...formData, university: e.target.value})}
+                disabled={disabled}
+
               >
                 {
                   thesisParams.universities.map((university) => (
@@ -224,6 +328,8 @@ const AddNewThesis = () => {
                 className="py-2 px-4 h-[42px] bg-[#fdfdff] border-[#e4e6fc] border transition-all rounded w-full outline-none  focus:border-main"
                 value={formData.institute}
                 onChange={(e)=>setFormData({...formData, institute: e.target.value})}
+                disabled={disabled}
+
               >
                 {
                   thesisParams.institutes.map((institute) => (
@@ -247,6 +353,8 @@ const AddNewThesis = () => {
                 className="py-2 px-4 h-[42px] bg-[#fdfdff] border-[#e4e6fc] border transition-all rounded w-full outline-none  focus:border-main"
                 value={formData.thesisType}
                 onChange={(e)=>setFormData({...formData, thesisType: e.target.value})}
+                disabled={disabled}
+
               >
              {
                   thesisParams.types.map((type) => (
@@ -270,6 +378,8 @@ const AddNewThesis = () => {
                 className="py-2 px-4 h-[42px] bg-[#fdfdff] border-[#e4e6fc] border transition-all rounded w-full outline-none  focus:border-main"
                 value={formData.thesisLanguage}
                 onChange={(e)=>setFormData({...formData, thesisLanguage: e.target.value})}
+                disabled={disabled}
+
               >
              {
                   thesisParams.languages.map((language) => (
@@ -289,9 +399,14 @@ const AddNewThesis = () => {
             <div className="col-span-12 md:col-span-7 md:px-3 mt-3 md:mt-0">
               <input
                 type="number"
+                min={1}
+                max={5000}
+                step={10}
                 className="py-2 px-4 h-[42px] bg-[#fdfdff] border-[#e4e6fc] border transition-all rounded w-full outline-none  focus:border-main"
                 value={formData.numOfPages}
                 onChange={(e)=>setFormData({...formData, numOfPages: e.target.value})}
+                disabled={disabled}
+
               />
             </div>
           </div>
@@ -303,9 +418,13 @@ const AddNewThesis = () => {
             <div className="col-span-12 md:col-span-7 md:px-3 mt-3 md:mt-0">
               <input
                 type="number"
+                max={2024}
+                min={1900}
                 className="py-2 px-4 h-[42px] bg-[#fdfdff] border-[#e4e6fc] border transition-all rounded w-full outline-none  focus:border-main"
                 value={formData.year}
                 onChange={(e)=>setFormData({...formData, year: e.target.value})}
+                disabled={disabled}
+
               />
             </div>
           </div>
@@ -321,6 +440,8 @@ const AddNewThesis = () => {
                 className="py-2 px-4 h-[42px] bg-[#fdfdff] border-[#e4e6fc] border transition-all rounded w-full outline-none  focus:border-main"
                 value={formData.supervisor}
                 onChange={(e)=>setFormData({...formData, supervisor: e.target.value})}
+                disabled={disabled}
+
               >
                 {
                   formUsers?.filter(us => us.user_id !== user?.user_id).map((formUser) => (
@@ -344,6 +465,8 @@ const AddNewThesis = () => {
                 className="py-2 px-4 h-[42px] bg-[#fdfdff] border-[#e4e6fc] border transition-all rounded w-full outline-none  focus:border-main"
                 value={formData.cosupervisor}
                 onChange={(e)=>setFormData({...formData, cosupervisor: e.target.value})}
+                disabled={disabled}
+
               >
                 {
                   formUsers?.filter(us => us.user_id !== user?.user_id).map((formUser) => (
@@ -364,7 +487,9 @@ const AddNewThesis = () => {
               <textarea
                value={formData.abstract}
                onChange={(e)=>setFormData({...formData, abstract: e.target.value})}
-               className="py-2 px-4 resize-none bg-[#fdfdff] border-[#e4e6fc] min-h-[250px] border transition-all rounded w-full outline-none  focus:border-main" />
+               className="py-2 px-4 resize-none bg-[#fdfdff] border-[#e4e6fc] min-h-[250px] border transition-all rounded w-full outline-none  focus:border-main"
+               disabled={disabled}
+                />
             </div>
           </div>
 
@@ -391,6 +516,8 @@ const AddNewThesis = () => {
                       setSelectedKeywords
                     )
                   }
+                  disabled={disabled}
+
                 />
                 <span className="ml-2">{keyword.related_keyword}</span>
               </label>
@@ -420,6 +547,8 @@ const AddNewThesis = () => {
                       setSelectedSubjects
                     )
                   }
+                  disabled={disabled}
+
                 />
                 <span className="ml-2">{subject.subject_name}</span>
               </label>
@@ -429,7 +558,7 @@ const AddNewThesis = () => {
 
           <div className="grid grid-cols-12">
             <div className="col-span-12 md:col-span-7 md:col-start-4 md:px-3 mt-3 md:mt-0">
-            <button style={{boxShadow: '0 2px 6px #acb5f6'}} className="bg-main transition-all rounded py-2 hover:bg-mainHover px-8 text-white">
+            <button  disabled={disabled} onClick={handleSave} style={{boxShadow: '0 2px 6px #acb5f6'}} className="bg-main disabled:bg-gray-500 transition-all rounded py-2 hover:bg-mainHover px-8 text-white">
               Save
             </button>
             </div>

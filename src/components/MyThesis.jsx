@@ -40,7 +40,7 @@ const MyThesis = () => {
         <h4 className="text-[4rem] text-white">{thesesLength}</h4>
         <p className="text-white text-xl">
           Thes{thesesLength > 1 ? 'e' : 'i'}s you have, {" "}
-          <Link className="text-white text-xl hover:text-mainHover transition-all" href="">
+          <Link to={'/add-thesis'} className="text-white text-xl hover:text-mainHover transition-all">
             add new one
           </Link>{" "}
         </p>

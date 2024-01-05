@@ -1,17 +1,22 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { FaHome, FaFileAlt, FaFileUpload } from "react-icons/fa";
+import { FaHome, FaFileAlt, FaFileUpload, FaFileExport, FaUsersCog, FaFileInvoice, FaLanguage, FaSchool, FaPencilRuler, FaKey, FaBook } from "react-icons/fa";
 import SidebarHeader from "./SidebarHeader";
 import SidebarElement from "./SidebarElement";
+import useUser from "../hooks/useUser";
+
+const allowedRoles = ['MANAGER', 'ADMIN']
 
 const Sidebar = ({toggle, setToggle}) => {
   const [active, setActive] = useState("/");
   const location = useLocation();
   const sidebarRef = useRef(null);
+  const { user } = useUser();
 
   useEffect(() => {
     setToggle(true);
     setActive(location.pathname);
+    console.log(user)
   }, [location]);
 
   useEffect(()=> {
@@ -38,7 +43,7 @@ const Sidebar = ({toggle, setToggle}) => {
  <div
       ref={sidebarRef}
       style={{ boxShadow: "0 4px 8px rgba(0,0,0,0.3)" }}
-      className={`${toggle ? '-translate-x-[250px] w-0' : 'translate-x-0 w-[250px]'}  overflow-hidden outline-none transition-all duration-600 fixed top-0 h-screen bg-[#fff] z-[880] left-0`}
+      className={`${toggle ? '-translate-x-[250px] w-0' : 'translate-x-0 w-[250px]'} overflow-y-scroll no-scrollbar overflow-hidden outline-none transition-all duration-600 fixed top-0 h-screen bg-[#fff] z-[880] left-0`}
     >
       <aside>
 
@@ -69,6 +74,61 @@ const Sidebar = ({toggle, setToggle}) => {
             text={"Add New Thesis"}
             active={active}
           />
+          {
+            allowedRoles?.includes(user?.authorities[0]?.authority) &&
+            <>
+            <SidebarHeader header='MANAGER' />
+            <SidebarElement
+              path={"/manager/theses"}
+              Icon={FaFileExport}
+              text={"Theses"}
+              active={active}
+            />
+            <SidebarElement
+              path={"/manager/professions"}
+              Icon={FaUsersCog}
+              text={"Professions"}
+              active={active}
+            />
+            <SidebarElement
+              path={"/manager/thesis-types"}
+              Icon={FaFileInvoice}
+              text={"Thesis Types"}
+              active={active}
+            />
+            <SidebarElement
+              path={"/manager/thesis-languages"}
+              Icon={FaLanguage}
+              text={"Thesis Languages"}
+              active={active}
+            />
+            <SidebarElement
+              path={"/manager/institutes"}
+              Icon={FaPencilRuler}
+              text={"Institutes"}
+              active={active}
+            />
+            <SidebarElement
+              path={"/manager/universities"}
+              Icon={FaSchool}
+              text={"Universities"}
+              active={active}
+            />          
+            <SidebarElement
+            path={"/manager/related-keywords"}
+            Icon={FaKey}
+            text={"Related Keywords"}
+            active={active}
+          />
+            <SidebarElement
+            path={"/manager/subjects"}
+            Icon={FaBook}
+            text={"Subjects"}
+            active={active}
+          />
+          </>
+          }
+        
         </ul>
 
       </aside>

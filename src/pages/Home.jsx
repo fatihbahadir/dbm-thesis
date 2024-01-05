@@ -60,10 +60,10 @@ const Home = () => {
             </div>
         </div>
 
-        <div className='text-main leading-[22px]  text-base font-semibold'>
+        <div className='text-main leading-[22px]  text-base font-semibold w-full h-full'>
               {these.title}
         </div>
-        <p className='text-[#34395e] leading-[28px] -mt-3 text-sm'>
+        <p className='text-[#34395e] leading-[28px] -mt-3 text-sm  w-full h-full '>
           {these.thesis_abstract}
         </p>
 
