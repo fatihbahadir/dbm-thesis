@@ -3,6 +3,7 @@ import axios from '../api/axios';
 import useAuth from '../hooks/useAuth';
 import { FaPlusSquare, FaUserCog } from 'react-icons/fa';
 import AddProfessionModal from '../components/AddProfessionModal';
+import ProfessionModal from '../components/ProfessionModal';
 
 const ManageProfessions = () => {
   const [loading, setLoading] = useState(false);
@@ -38,6 +39,14 @@ const ManageProfessions = () => {
     setIsModalOpen(false);
   };
 
+  const closeProfessionModal = () => {
+    setSelectedProfession(null)
+  };
+
+  const openProfessionModal = (profession) => {
+    setSelectedProfession(profession);
+  };
+
   
   useEffect(()=>{
     getProfessions();
@@ -52,10 +61,15 @@ const ManageProfessions = () => {
                   {isModalOpen && (
         <AddProfessionModal isChanged={isChanged} setIsChanged={setIsChanged} closeModal={closeModal}  />
       )}
+      {
+        selectedProfession &&
+        <ProfessionModal profession={selectedProfession} isChanged={isChanged} setIsChanged={setIsChanged} closeModal={closeProfessionModal}  />
+
+      }
 
         <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3'>
           {professions.map((profession)=>(
-            <div key={profession.profession_id} className='bg-white transition hover:scale-105 cursor-pointer hover:shadow-2xl shadow-lg p-5 rounded m-6 flex justify-between items-center'>
+            <div onClick={()=>openProfessionModal(profession)} key={profession.profession_id} className='bg-white transition hover:scale-105 cursor-pointer hover:shadow-2xl shadow-lg p-5 rounded m-6 flex justify-between items-center'>
               <h2 className='tracking-wider font-bold'>{profession.profession_name}</h2>
               <div className='bg-main rounded text-white p-5'>
               <FaUserCog className='w-[2em] h-[2em]' />

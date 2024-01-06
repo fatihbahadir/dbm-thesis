@@ -80,17 +80,17 @@ const AddProfessionModal = ({closeModal, setIsChanged, isChanged}) => {
 
   return (
     <div className="fixed z-[900] top-0 left-0 w-full h-full flex justify-center items-center bg-black bg-opacity-50 px-2">
-        <div ref={modalRef} className="bg-white rounded-lg p-8 max-w-[600px]">
+        <div ref={modalRef} className="bg-white rounded-lg p-8 max-w-[600px] text-sm">
             <h2 className="text-lg font-bold border-b tailwind-auto-border border-main transition cursor-pointer">
                 Add New Profession
             </h2>
             <div className="mt-5 flex flex-col md:flex-row gap-2 md:gap-16 justify-center md:items-center ">
                 <label className='font-semibold'>Name: </label>
-                <input type='text' disabled={disabled} value={profession} onChange={(e)=>{setProfession(e.target.value)}} className='border bg-[#fdfdff] border-[#e4e6fc] transition-all rounded w-[300px] outline-none focus:border-main px-1 py-1' />
+                <input type='text' disabled={disabled} value={profession} onChange={(e)=>{setProfession(e.target.value)}} className='border bg-[#fdfdff] border-[#e4e6fc] transition-all rounded w-[300px] outline-none focus:border-main px-3 py-2' />
             </div>
             <div className="mt-5 flex flex-col md:flex-row gap-2 md:gap-6 justify-center md:items-center ">
                 <label className='font-semibold'>Description: </label>
-                <textarea disabled={disabled} value={description} onChange={(e)=>{setDescription(e.target.value)}} className='border resize-none bg-[#fdfdff] border-[#e4e6fc] transition-all rounded w-[300px] outline-none focus:border-main px-1 py-1' />
+                <textarea disabled={disabled} value={description} onChange={(e)=>{setDescription(e.target.value)}} className='border resize-none bg-[#fdfdff] border-[#e4e6fc] transition-all rounded w-[300px] outline-none focus:border-main px-3 py-2' />
             </div>
             <div className='w-full mt-5 text-right'>
                 <button disabled={disabled} onClick={saveProfession} className='py-1 disabled:bg-gray-400 px-6 bg-main hover:bg-mainHover transition text-white rounded'>
