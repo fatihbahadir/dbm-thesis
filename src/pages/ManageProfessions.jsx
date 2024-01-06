@@ -4,6 +4,7 @@ import useAuth from '../hooks/useAuth';
 import { FaPlusSquare, FaUserCog } from 'react-icons/fa';
 import AddProfessionModal from '../components/AddProfessionModal';
 import ProfessionModal from '../components/ProfessionModal';
+import LoadingSpinner from '../components/LoadingSpinner';
 
 const ManageProfessions = () => {
   const [loading, setLoading] = useState(false);
@@ -12,7 +13,7 @@ const ManageProfessions = () => {
   const [selectedProfession, setSelectedProfession] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isChanged, setIsChanged] = useState();
-
+  
 
 
   const getProfessions = async () => {
@@ -54,7 +55,7 @@ const ManageProfessions = () => {
 
   useEffect(()=>{
     isChanged && getProfessions();
-  }, [])
+  }, [isChanged])
 
   return (
     <div className='w-full h-full'>
@@ -66,8 +67,12 @@ const ManageProfessions = () => {
         <ProfessionModal profession={selectedProfession} isChanged={isChanged} setIsChanged={setIsChanged} closeModal={closeProfessionModal}  />
 
       }
-
-        <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3'>
+     {
+        loading ? <div className='w-screen h-screen ml-[-30px] flex items-center justify-center'>
+          <LoadingSpinner/>
+          </div>
+          :
+          <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3'>
           {professions.map((profession)=>(
             <div onClick={()=>openProfessionModal(profession)} key={profession.profession_id} className='bg-white transition hover:scale-105 cursor-pointer hover:shadow-2xl shadow-lg p-5 rounded m-6 flex justify-between items-center'>
               <h2 className='tracking-wider font-bold'>{profession.profession_name}</h2>
@@ -83,6 +88,8 @@ const ManageProfessions = () => {
               </div>        
           </div>
         </div>
+     }
+   
     </div>
   )
 }

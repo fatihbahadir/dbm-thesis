@@ -6,6 +6,7 @@ import useThesis from "../hooks/useThesis";
 import AddInstitueModal from "../components/AddInstituteModal";
 import InstituteModal from "../components/InstituteModal";
 import { FaPencilRuler, FaPlusSquare } from "react-icons/fa";
+import LoadingSpinner from "../components/LoadingSpinner";
 
 const ManageInstitutes = () => {
   const [loading, setLoading] = useState();
@@ -57,6 +58,10 @@ const ManageInstitutes = () => {
     thesisParams.institutes.length < 1 && getAllParams();
   }, []);
 
+  useEffect(() => {
+    isChanged && getAllParams();
+  }, [isChanged]);
+
   return (
     <div className="w-full h-full">
     {isModalOpen && (
@@ -75,6 +80,12 @@ const ManageInstitutes = () => {
       />
     )}
 
+    {
+      loading ? 
+      <div className="w-screen h-screen ml-[-30px] flex items-center justify-center">
+      <LoadingSpinner />
+    </div>
+    :
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
       {thesisParams?.institutes?.map((institute) => (
         <div
@@ -100,6 +111,9 @@ const ManageInstitutes = () => {
         </div>
       </div>
     </div>
+    }
+
+
   </div>
   )
 }

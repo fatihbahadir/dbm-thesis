@@ -6,6 +6,7 @@ import useThesis from "../hooks/useThesis";
 import AddSubjectModal from "../components/AddSubjectModal";
 import SubjectModal from "../components/SubjectModal";
 import { FaBook, FaPlusSquare } from "react-icons/fa";
+import LoadingSpinner from "../components/LoadingSpinner";
 
 const ManageSubjects = () => {
   const [loading, setLoading] = useState();
@@ -57,6 +58,10 @@ const ManageSubjects = () => {
     thesisParams.subjects.length < 1 && getAllParams();
   }, []);
 
+  useEffect(() => {
+    isChanged && getAllParams();
+  }, [isChanged]);
+
   
   return (
     <div className="w-full h-full">
@@ -76,7 +81,13 @@ const ManageSubjects = () => {
       />
     )}
 
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+{
+        loading ? 
+        <div className="w-screen h-screen ml-[-30px] flex items-center justify-center">
+        <LoadingSpinner />
+      </div>
+      :
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
       {thesisParams?.subjects?.map((subject) => (
         <div
           onClick={() => openSubjectModal(subject)}
@@ -101,6 +112,8 @@ const ManageSubjects = () => {
         </div>
       </div>
     </div>
+}
+   
   </div>
   )
 }

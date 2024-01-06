@@ -6,6 +6,7 @@ import useThesis from "../hooks/useThesis";
 import AddUniversityModal from "../components/AddUniversityModal";
 import UniversityModal from "../components/UniversityModal";
 import { FaSchool, FaPlusSquare } from "react-icons/fa";
+import LoadingSpinner from "../components/LoadingSpinner";
 
 const ManageUniversities = () => {
   const [loading, setLoading] = useState();
@@ -57,6 +58,10 @@ const ManageUniversities = () => {
     thesisParams.universities.length < 1 && getAllParams();
   }, []);
 
+  useEffect(() => {
+    isChanged && getAllParams();
+  }, [isChanged]);
+
   return (
     <div className="w-full h-full">
       {isModalOpen && (
@@ -75,31 +80,40 @@ const ManageUniversities = () => {
         />
       )}
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-        {thesisParams?.universities?.map((university) => (
-          <div
-            onClick={() => openUniversityModal(university)}
-            key={university.university_id}
-            className="bg-white transition hover:scale-105 cursor-pointer hover:shadow-2xl shadow-lg p-5 rounded m-6 flex justify-between items-center"
-          >
-            <h2 className="tracking-wider font-bold">
-              {university.university_name}
-            </h2>
-            <div className="bg-main rounded text-white p-5">
-              <FaSchool className="w-[2em] h-[2em]" />
-            </div>
-          </div>
-        ))}
-        <div
-          onClick={openModal}
-          className="bg-white transition hover:scale-105 hover:shadow-2xl shadow-lg p-5 m-6 flex justify-between items-center cursor-pointer"
-        >
-          <h2 className="tracking-wider font-bold">Add New University</h2>
-          <div className="bg-main rounded text-white p-5">
-            <FaPlusSquare className="w-[2em] h-[2em]" />
-          </div>
-        </div>
-      </div>
+      {
+         loading ? 
+         <div className="w-screen h-screen ml-[-30px] flex items-center justify-center">
+         <LoadingSpinner />
+       </div>
+       :
+       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+       {thesisParams?.universities?.map((university) => (
+         <div
+           onClick={() => openUniversityModal(university)}
+           key={university.university_id}
+           className="bg-white transition hover:scale-105 cursor-pointer hover:shadow-2xl shadow-lg p-5 rounded m-6 flex justify-between items-center"
+         >
+           <h2 className="tracking-wider font-bold">
+             {university.university_name}
+           </h2>
+           <div className="bg-main rounded text-white p-5">
+             <FaSchool className="w-[2em] h-[2em]" />
+           </div>
+         </div>
+       ))}
+       <div
+         onClick={openModal}
+         className="bg-white transition hover:scale-105 hover:shadow-2xl shadow-lg p-5 m-6 flex justify-between items-center cursor-pointer"
+       >
+         <h2 className="tracking-wider font-bold">Add New University</h2>
+         <div className="bg-main rounded text-white p-5">
+           <FaPlusSquare className="w-[2em] h-[2em]" />
+         </div>
+       </div>
+     </div>
+      }
+
+  
     </div>
   );
 };
