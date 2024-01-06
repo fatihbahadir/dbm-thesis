@@ -8,10 +8,6 @@ const RecentTheses = () => {
   const { theses, setTheses } = useThesis();
   const navigate = useNavigate();
 
-  useEffect(()=>{
-    console.log(theses)
-  }, [])
-
   const formatDate = (inputDate) => {
     const date = new Date(inputDate);
     const options = { year: 'numeric', month: 'long', day: 'numeric' };

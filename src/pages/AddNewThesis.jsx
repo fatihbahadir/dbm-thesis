@@ -5,6 +5,7 @@ import axios from "../api/axios";
 import useUser from "../hooks/useUser";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import LoadingSpinner from "../components/LoadingSpinner";
 
 const AddNewThesis = () => {
   const { thesisParams, setThesisParams} = useThesis();
@@ -28,6 +29,7 @@ const AddNewThesis = () => {
   })
   const [disabled, setDisabled] = useState()
   const navigate = useNavigate();
+  const [loading, setLoading] = useState();
 
   const getUsers = () => {
     axios.get('/api/v1/user', {
@@ -57,6 +59,7 @@ const AddNewThesis = () => {
 
   const getAllParams = async () => {
     try {
+      setLoading(true);
       const subjectsResponse = await axios.get("/api/v1/subject", {
         headers: {
           Authorization: `Bearer ${auth.accessToken}`,
@@ -128,9 +131,10 @@ const AddNewThesis = () => {
         ...prevParams,
         types: typeResponse.data.data,
       }));
-
+      setLoading(false);
     } catch (error) {
       console.error("Error fetching data:", error);
+      setLoading(false);
     }
   };
   
@@ -160,6 +164,7 @@ const AddNewThesis = () => {
 
 
   const handleSave = () => {
+      setLoading(true);
       if(isEmpty(formData.thesisNo?.trim(), 3) || formData.thesisNo?.trim().length > 7) {
         showError('Thesis No can not be smaller then 3 letters or bigger than 7 letters.')
         return
@@ -235,11 +240,12 @@ const AddNewThesis = () => {
         setSelectedKeywords([])
         setSelectedSubjects([])
         showSuccess('Your thesis posted successfully')
+        setLoading(false);
       })
       .catch((err) => {
         console.log(err);
         showError("Sorry... we can't save your thesis now. It is about us... Please try again later")
-
+        setLoading(false);
       });
   }
 
@@ -264,7 +270,13 @@ const AddNewThesis = () => {
           </h2>
         </div>
         <div className="w-full flex flex-col gap-8 p-5">
-        <div className="grid grid-cols-12 items-center">
+          {
+            loading ? <div className="w-full min-h-[550px] md:min-h-[800px] flex items-center justify-center">
+              <LoadingSpinner/>
+              </div>
+              :
+              <>
+               <div className="grid grid-cols-12 items-center">
             <div className="col-span-12 md:col-span-3 text-left md:text-right pr-12">
               <label className="font-semibold">Thesis No</label>
             </div>
@@ -564,6 +576,9 @@ const AddNewThesis = () => {
             </div>
 
           </div>
+              </>
+          }
+       
         </div>
       </div>
     </div>

@@ -2,12 +2,14 @@ import React, { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom';
 import useAuth from '../hooks/useAuth';
 import axios from '../api/axios';
+import LoadingSpinner from '../components/LoadingSpinner';
 
 const ThesisDetail = () => {
 const { thesisId } = useParams();
 const { auth } = useAuth();
 const navigate = useNavigate();
 const [exThesis, setExThesis] = useState({});
+const [loading, setLoading] = useState();
 
 const formatDate = (inputDate) => {
     if (inputDate) {
@@ -19,6 +21,7 @@ const formatDate = (inputDate) => {
   };
 
 useEffect(() => {
+      setLoading(true);
       axios
         .get(`/api/v1/thesis/${thesisId}`, {
           headers: {
@@ -27,13 +30,23 @@ useEffect(() => {
         })
         .then((res) => {
           setExThesis(res.data.data);
+          setLoading(false);
         })
-        .catch((err) => console.log(err));
+        .catch((err) => {
+          setLoading(false);
+          console.log(err)}
+          );
   }, []);
   return (
     <div className='w-full h-full pt-12'>
       <div className="bg-white shadow-lg rounded flex flex-col justify-center gap-8 max-w-[900px] m-auto">
-        <div className='flex flex-col items-center w-full py-8 px-3 bg-main rounded-t '>
+        {
+          loading ? <div className='w-full flex items-center justify-center min-h-[500px] md:min-h-[900px]'>
+            <LoadingSpinner/>
+            </div>
+            :
+            <>
+             <div className='flex flex-col items-center w-full py-8 px-3 bg-main rounded-t '>
             <h2 className='text-2xl font-semibold tracking-wide text-white'>{exThesis?.title}</h2>
         </div>
         <div className='grid grid-cols-12 px-3 w-full'>
@@ -109,6 +122,9 @@ useEffect(() => {
                 Back
             </button>
         </div>
+            </>
+        }
+       
       </div>
     </div>
   )

@@ -4,21 +4,26 @@ import useAuth from "../hooks/useAuth";
 import Avatar from '../assets/avatar.png';
 import Avatar2 from '../assets/avatar-2.png';
 import useUser from '../hooks/useUser';
+import LoadingSpinner from "./LoadingSpinner";
 
 const UsersComponent = () => {
   const {users, setUsers} = useUser();
   const [numDots, setNumDots] = useState(0);
   const { auth } = useAuth();
   const contentRef = useRef(null);
+  const [loading, setLoading] = useState();
 
   const getUsers = () => {
+    setLoading(true);
     axios.get('/api/v1/user', {
       headers: { Authorization: `Bearer ${auth?.accessToken}` },  
     }).then((res)=>{
       console.log(res)
       setUsers(res.data.data)
+      setLoading(false)
     }).catch((err) => {
       console.log(err)
+      setLoading(false)
     })
   }
 
@@ -54,21 +59,28 @@ const UsersComponent = () => {
         }}
         onMouseDown={(e) => e.preventDefault()} // Seçimi engellemek için
       >
-        {users?.map((user) => (
-          <div key={user.user_id} className="flex flex-col gap-4 p-5 w-64 items-center justify-center">
-            <img
-              src={user.gender === 'MALE' ? Avatar : Avatar2}
-              alt={`Avatar of ${user.username}`}
-              className="rounded-full"
-              style={{ maxWidth: '6rem', maxHeight: '6rem' }}
-            />
-            <h2 className="font-semibold text-base text-[#191d21] whitespace-nowrap overflow-hidden">{user.firstname} {user.lastname}</h2>
-            <p className="text-xs -mt-4 uppercase tracking-widest whitespace-nowrap font-semibold text-grayUpdated">{user.profession.profession_name}</p>
-            <button className={`py-2 px-4 text-sm transition-all rounded-[30px] ${user.user_id % 2 === 0 ? 'bg-[#fc544b] hover:bg-[#fb160a]' : 'bg-main hover:bg-mainHover'} text-white`}>
-              Theses
-            </button>
-          </div>
-        ))}
+        {
+          loading ? <div className="flex w-full min-h-[284px] items-center justify-center">
+            <LoadingSpinner/>
+            </div>
+            :
+            users?.map((user) => (
+              <div key={user.user_id} className="flex flex-col gap-4 p-5 w-64 items-center justify-center">
+                <img
+                  src={user.gender === 'MALE' ? Avatar : Avatar2}
+                  alt={`Avatar of ${user.username}`}
+                  className="rounded-full"
+                  style={{ maxWidth: '6rem', maxHeight: '6rem' }}
+                />
+                <h2 className="font-semibold text-base text-[#191d21] whitespace-nowrap overflow-hidden">{user.firstname} {user.lastname}</h2>
+                <p className="text-xs -mt-4 uppercase tracking-widest whitespace-nowrap font-semibold text-grayUpdated">{user.profession.profession_name}</p>
+                <button className={`py-2 px-4 text-sm transition-all rounded-[30px] ${user.user_id % 2 === 0 ? 'bg-[#fc544b] hover:bg-[#fb160a]' : 'bg-main hover:bg-mainHover'} text-white`}>
+                  Theses
+                </button>
+              </div>
+            ))
+        }
+       
       </div>
 
     </div>
