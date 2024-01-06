@@ -421,7 +421,7 @@ const Thesis = () => {
                         </h3>
                         <h3>Language: {these.language.thesis_language}</h3>
                       </div>
-                      <div className="">{these.thesis_abstract} {these.thesis_abstract} {these.thesis_abstract} {these.thesis_abstract} {these.thesis_abstract}</div>
+                      <div className="">{these.thesis_abstract.slice(0,550) + '...'}</div>
                       <div className="flex w-full justify-end">
                         <button onClick={()=>navigate(`/thesis-detail/${these.thesis_id}`)} className="bg-main px-5 py-2 rounded text-white hover:bg-mainHover transition text-sm">
                           View

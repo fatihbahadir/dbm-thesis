@@ -49,7 +49,27 @@ const Home = () => {
   return (
     <>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 w-full gap-12">
-        {theses
+        {
+          loading ?         
+          <>
+          <div
+          className="bg-white rounded shadow flex items-center justify-center p-5 min-h-[297px] flex-col gap-6 transition-all duration-300 cursor-pointer hover:shadow-xl"
+        >     
+        <LoadingSpinner/>
+        </div>
+        <div
+          className="bg-white rounded shadow flex items-center justify-center p-5 min-h-[297px] flex-col gap-6 transition-all duration-300 cursor-pointer hover:shadow-xl"
+        >     
+        <LoadingSpinner/>
+        </div>
+        <div
+          className="bg-white rounded shadow flex items-center justify-center p-5 min-h-[297px] flex-col gap-6 transition-all duration-300 cursor-pointer hover:shadow-xl"
+        >     
+        <LoadingSpinner/>
+        </div>
+        </>
+        :
+        theses
           .slice()
           .sort(() => Math.random() - 0.5)
           .slice(0, 3)
@@ -58,14 +78,8 @@ const Home = () => {
               key={these.thesis_id}
               onClick={() => navigate(`/thesis-detail/${these.thesis_id}`)}
               className="bg-white rounded shadow flex justify-center p-5  flex-col gap-6 transition-all duration-300 cursor-pointer hover:shadow-xl"
-            >
-              {loading ? (
-                <div className="min-h-[259px] flex items-center justify-center">
-                  <LoadingSpinner />
-                </div>
-              ) : (
-                <>
-                  <div className="flex gap-3 text-xs  text-[#34395e] font-semibold">
+            >     
+              <div className="flex gap-3 text-xs  text-[#34395e] font-semibold">
                     <div className="uppercase tracking">
                       {these.institute.institute_name.slice(13)}
                     </div>
@@ -75,11 +89,11 @@ const Home = () => {
                     </div>
                   </div>
 
-                  <div className="text-main leading-[22px]  text-base font-semibold w-full h-full">
+                  <div className="text-main leading-[22px] -mt-3  text-base font-semibold w-full h-full">
                     {these.title}
                   </div>
                   <p className="text-[#34395e] leading-[28px] -mt-3 text-sm  w-full h-full ">
-                    {these.thesis_abstract}
+                    {these.thesis_abstract.slice(0,150) + '...' }
                   </p>
 
                   <div className="flex gap-1 w-full items-center mt-5">
@@ -96,8 +110,6 @@ const Home = () => {
                       </p>
                     </div>
                   </div>
-                </>
-              )}
             </div>
           ))}
       </div>

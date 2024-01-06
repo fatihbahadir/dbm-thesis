@@ -91,7 +91,7 @@ useEffect(() => {
         </div>
         <div className='grid grid-cols-12 px-3 w-full'>
             <h3 className='text-grayUpdated col-span-12 w-full g-f sm:col-span-2 sm:text-right font-semibold'>Thesis Abstarct: </h3>
-            <p style={{overflowWrap: 'break-word'}} className='sm:col-span-10 col-span-12 w-full sm:ml-5 '>{exThesis?.thesis_abstract} {exThesis?.thesis_abstract} {exThesis?.thesis_abstract} {exThesis?.thesis_abstract}</p>
+            <p style={{overflowWrap: 'break-word'}} className='sm:col-span-10 col-span-12 w-full sm:ml-5 pr-8 '>{exThesis?.thesis_abstract}</p>
         </div>
         <div className='grid grid-cols-12 px-3 w-full'>
             <h3 className='text-grayUpdated col-span-12 sm:col-span-2 sm:text-right font-semibold'>Number Of Pages: </h3>

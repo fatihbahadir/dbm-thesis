@@ -79,7 +79,7 @@ const calcTime = (date) => {
                 {these.title}
           </div>
           <p className='text-[#34395e] leading-[28px] -mt-3 text-sm  w-full h-full '>
-            {these.thesis_abstract}
+            {these.thesis_abstract.slice(0,200) + '...'}
           </p>
   
           <div className='flex gap-1 w-full items-center mt-5'>
