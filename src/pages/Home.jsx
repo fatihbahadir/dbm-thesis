@@ -17,9 +17,10 @@ const Home = () => {
   const { theses, setTheses } = useThesis();
   const navigate = useNavigate();
   const [loading, setLoading] = useState();
+  const [threeTheses, setThreeTheses] = useState([]);
 
   useEffect(() => {
-    theses.length < 1 && setLoading(true);
+    setLoading(true);
     axios
       .get("/api/v1/thesis", {
         headers: {
@@ -29,6 +30,16 @@ const Home = () => {
       .then((res) => {
         console.log(res.data.data);
         setTheses(res.data.data);
+        
+        return axios.get("/api/v1/thesis?random=3", {
+          headers: {
+            Authorization: `Bearer ${auth.accessToken}`,
+          },
+        });
+      })
+      .then((randomRes) => {
+        console.log(randomRes.data.data);
+        setThreeTheses(randomRes.data.data);
         setLoading(false);
       })
       .catch((err) => {
@@ -36,6 +47,7 @@ const Home = () => {
         setLoading(false);
       });
   }, []);
+  
 
   const calcTime = (date) => {
     const currentDate = new Date();
@@ -69,11 +81,7 @@ const Home = () => {
         </div>
         </>
         :
-        theses
-          .slice()
-          .sort(() => Math.random() - 0.5)
-          .slice(0, 3)
-          .map((these) => (
+          threeTheses.map((these) => (
             <div
               key={these.thesis_id}
               onClick={() => navigate(`/thesis-detail/${these.thesis_id}`)}
@@ -115,15 +123,15 @@ const Home = () => {
       </div>
       <div className="grid grid-rows-2 lg:grid-rows-1 grid-cols-1 lg:grid-cols-6 w-full gap-12 mt-12">
         <div className="col-span-6 lg:col-span-4">
-          <UsersCompnent />
+          <UsersCompnent/>
         </div>
         <div className="col-span-6 lg:col-span-2">
-          <MyThesis />
+          <MyThesis/>
         </div>
       </div>
 
       <div className="grid grid-cols-1 mt-12">
-        <RecentTheses />
+        <RecentTheses/>
       </div>
     </>
   );
