@@ -12,6 +12,9 @@ import { FaChevronRight } from "react-icons/fa";
 
 import { useParams } from 'react-router-dom';
 
+import Avatar from '../assets/avatar.png';
+import Avatar2 from '../assets/avatar-2.png';
+
 
 
 const profileSentences = [
@@ -71,7 +74,7 @@ const Profile = () => {
                 <div className="flex items-center">
 
                     <div>
-                        <img src="/src/assets/avatar.png" class="mr-[.5rem] align-middle w-[100px] h-[100px] shadow-xl" alt="Avatar" />
+                        <img src={Avatar} class="mr-[.5rem] align-middle w-[100px] h-[100px] shadow-xl" alt="Avatar" />
                         <p className="mt-2 text-[10px] italic underline text-slate-400">Change Photo</p>
                     </div>
 
@@ -87,13 +90,13 @@ const Profile = () => {
 
                     <div className="flex items-center gap-10">
                         <div className="">
-                            <img src="/src/assets/avatar.png" class="mr-[.5rem] align-middle w-[100px] h-[100px] rounded-full shadow-xl" alt="Avatar" />
+                            <img src={Avatar} class="mr-[.5rem] align-middle w-[100px] h-[100px] rounded-full shadow-xl" alt="Avatar" />
                         </div>
                         <div className="">
-                            <img src="/src/assets/avatar.png" class="mr-[.5rem] align-middle w-[60px] h-[60px] rounded-full shadow-xl" alt="Avatar" />
+                            <img src={Avatar} class="mr-[.5rem] align-middle w-[60px] h-[60px] rounded-full shadow-xl" alt="Avatar" />
                         </div>
                         <div className="">
-                            <img src="/src/assets/avatar.png" class="mr-[.5rem] align-middle w-[40px] h-[40px] rounded-full shadow-xl" alt="Avatar" />
+                            <img src={Avatar} class="mr-[.5rem] align-middle w-[40px] h-[40px] rounded-full shadow-xl" alt="Avatar" />
                         </div>
                     </div>
 
@@ -169,8 +172,8 @@ const Profile = () => {
 
             </div>
 
-            <div className="absolute bottom-0 lg:right-0">
-                <button className="bg-[#6777ef] hover:bg-[#5664ca] text-white font-bold py-2 px-4 rounded-t lg:rounded-tr-none">
+            <div className="absolute bottom-0 lg:right-0 pr-5 pb-5">
+                <button className="bg-[#6777ef] hover:bg-[#5664ca] text-white font-bold py-2 px-4 rounded">
                     Update
                 </button>
             </div>

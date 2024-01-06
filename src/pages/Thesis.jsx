@@ -187,7 +187,7 @@ const Thesis = () => {
              >
                Subjects
              </span>
-             <div className="flex flex-col h-full">
+             <div className="flex flex-col max-h-[200px] no-scrollbar overflow-y-scroll">
                {thesisParams.subjects.map((subject) => (
                  <label
                    key={subject.subject_id}
@@ -195,7 +195,7 @@ const Thesis = () => {
                  >
                    <input
                      type="checkbox"
-                     className="form-checkbox h-3 w-3 text-gray-600 accent-main"
+                     className="form-checkbox h-3 w-3  text-gray-600 accent-main"
                      value={subject.subject_id}
                      checked={selectedSubjects.includes(subject.subject_id)}
                      onChange={(e) =>
@@ -218,7 +218,7 @@ const Thesis = () => {
              >
                Keywords
              </span>
-             <div className="flex flex-col h-full">
+             <div className="flex flex-col h-full no-scrollbar max-h-[200px] overflow-y-scroll">
                {thesisParams.keywords.map((keyword) => (
                  <label
                    key={keyword.keyword_id}
@@ -250,7 +250,7 @@ const Thesis = () => {
              >
                Universities
              </span>
-             <div className="flex flex-col h-full">
+             <div className="flex flex-col h-full max-h-[200px] no-scrollbar overflow-y-scroll">
                {thesisParams.universities.map((university) => (
                  <label
                    key={university.university_id}
@@ -284,7 +284,7 @@ const Thesis = () => {
              >
                Institutes
              </span>
-             <div className="flex flex-col h-full">
+             <div className="flex flex-col h-full max-h-[200px] no-scrollbar overflow-y-scroll">
                {thesisParams.institutes.map((institute) => (
                  <label
                    key={institute.institute_id}
@@ -316,7 +316,7 @@ const Thesis = () => {
              >
                Types
              </span>
-             <div className="flex flex-col h-full">
+             <div className="flex flex-col h-full max-h-[200px] no-scrollbar overflow-y-scroll">
                {thesisParams.types.map((type) => (
                  <label
                    key={type.thesis_type_id}
@@ -348,7 +348,7 @@ const Thesis = () => {
              >
                Languages
              </span>
-             <div className="flex flex-col h-full">
+             <div className="flex flex-col h-full max-h-[200px] no-scrollbar overflow-y-scroll">
                {thesisParams.languages.map((language) => (
                  <label
                    key={language.thesis_language_id}
