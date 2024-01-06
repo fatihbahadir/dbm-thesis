@@ -87,7 +87,7 @@ const calcTime = (date) => {
              </div>
      
              <div className='text-main leading-[22px]  text-base font-semibold w-full h-full'>
-                   {these.title}
+             {these.title.length > 100 ?  these.title.slice(0,100) + '...' : these.title}
              </div>
              <p className='text-[#34395e] leading-[28px] -mt-3 text-sm  w-full h-full '>
                {these.thesis_abstract.slice(0,200) + '...'}

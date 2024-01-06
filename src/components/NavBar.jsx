@@ -105,7 +105,7 @@ const NavBar = ({ toggle, setToggle }) => {
           <div onClick={() => setToggle(!toggle)} className='flex items-center px-[15px] h-full cursor-pointer'>
             <FaBars className='w-[16px] h-[32px]' color='white' />
           </div>
-          {(searchBarOpen || window.innerWidth >= 768) ? (
+          {/* {(searchBarOpen || window.innerWidth >= 768) ? (
           <div className={`${window.innerWidth >= 768 ? 'flex items-center w-full' : 'absolute top-4 w-full flex left-0 ml-[.2rem] z-[300]'} transition-all`} ref={searchBarRef}>
             <input
               type="text"
@@ -152,7 +152,7 @@ const NavBar = ({ toggle, setToggle }) => {
           <div onClick={toggleSearchBar} className="cursor-pointer">
             <FaSearch color='white'/>
           </div>
-        )}
+        )} */}
         </div>
 
         <div className=''>

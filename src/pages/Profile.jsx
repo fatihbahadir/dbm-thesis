@@ -57,9 +57,7 @@ const Profile = () => {
 
     return (
     <div className="m-1 lg:flex lg:flex-col lg:min-h-screen lg:items-center">
-        
-        <h1 className="mt-10 lg:text-2xl font-bold">Thesis System | Profile Page</h1>
-        
+            
         <div className="greeting mt-5 lg:mt-10 mb-10">
             <div className="mt-3 pt-3 flex items-center gap-4">
                 <div className="box w-[33px] h-[8px] bg-[#6777ef] rounded-xl"></div>
@@ -154,8 +152,7 @@ const Profile = () => {
                             
                         </div>
 
-                        <div className="m-auto">
-                            
+                        <div className="lg:m-auto p-5 lg:p-0">
                             <h1 className="mb-5 text-[#6777ef] font-bold">Profession</h1>
                             <div className="flex flex-col gap-1 text-sm">
                                 <h3 className="font-bold">{user.profession.profession_name}</h3>
@@ -172,18 +169,12 @@ const Profile = () => {
 
             </div>
 
-            <div className="absolute bottom-0 lg:right-0 pr-5 pb-5">
+            <div className="absolute bottom-0 pt-12 right-0 pr-5 pb-5">
                 <button className="bg-[#6777ef] hover:bg-[#5664ca] text-white font-bold py-2 px-4 rounded">
                     Update
                 </button>
             </div>
 
-        </div>
-
-        <div className="relative max-w-[600px] mt-7 rounded overflow-hidden shadow-lg">
-            
-            test
-            
         </div>
 
         {/* <div className="relative max-w-[600px] rounded overflow-hidden shadow-lg mt-10">

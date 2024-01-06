@@ -21,6 +21,7 @@ import ManageSubjects from "./pages/ManageSubjects";
 import ManageKeywords from "./pages/ManageKeywords";
 import ManageTypes from "./pages/ManageTypes";
 import ManageLanguages from "./pages/ManageLanguages";
+import UserTheses from "./pages/UserTheses";
 
 function App() {
   return (
@@ -52,6 +53,10 @@ function App() {
 
           <Route element={<RequireAuth allowedRoles={["MANAGER", "USER", "ADMIN"]}/>}>
             <Route path="/profile/:userId" element={<Profile/>} />
+          </Route>
+
+          <Route element={<RequireAuth allowedRoles={["MANAGER", "USER", "ADMIN"]}/>}>
+            <Route path="/user-theses/:userId" element={<UserTheses/>} />
           </Route>
 
           <Route element={<RequireAuth allowedRoles={["MANAGER", "ADMIN"]}/>}>

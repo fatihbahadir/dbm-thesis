@@ -60,7 +60,7 @@ const Home = () => {
   };
   return (
     <>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 w-full gap-12">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 w-full gap-12">
         {
           loading ?         
           <>
@@ -98,7 +98,7 @@ const Home = () => {
                   </div>
 
                   <div className="text-main leading-[22px] -mt-3  text-base font-semibold w-full h-full">
-                    {these.title}
+                    {these.title.length > 100 ? these.title.slice(0,100) + '...' : these.title}
                   </div>
                   <p className="text-[#34395e] leading-[28px] -mt-3 text-sm  w-full h-full ">
                     {these.thesis_abstract.slice(0,150) + '...' }

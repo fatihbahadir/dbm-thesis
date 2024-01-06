@@ -5,6 +5,7 @@ import Avatar from '../assets/avatar.png';
 import Avatar2 from '../assets/avatar-2.png';
 import useUser from '../hooks/useUser';
 import LoadingSpinner from "./LoadingSpinner";
+import { useNavigate } from "react-router-dom";
 
 const UsersComponent = () => {
   const {users, setUsers} = useUser();
@@ -12,6 +13,7 @@ const UsersComponent = () => {
   const { auth } = useAuth();
   const contentRef = useRef(null);
   const [loading, setLoading] = useState();
+  const navigate = useNavigate();
 
   const getUsers = () => {
     setLoading(true);
@@ -74,7 +76,7 @@ const UsersComponent = () => {
                 />
                 <h2 className="font-semibold text-base text-[#191d21] whitespace-nowrap overflow-hidden">{user.firstname} {user.lastname}</h2>
                 <p className="text-xs -mt-4 uppercase tracking-widest whitespace-nowrap font-semibold text-grayUpdated">{user.profession.profession_name}</p>
-                <button className={`py-2 px-4 text-sm transition-all rounded-[30px] ${user.user_id % 2 === 0 ? 'bg-[#fc544b] hover:bg-[#fb160a]' : 'bg-main hover:bg-mainHover'} text-white`}>
+                <button onClick={()=>navigate(`/user-theses/${user.user_id}`)} className={`py-2 px-4 text-sm transition-all rounded-[30px] ${user.user_id % 2 === 0 ? 'bg-[#fc544b] hover:bg-[#fb160a]' : 'bg-main hover:bg-mainHover'} text-white`}>
                   Theses
                 </button>
               </div>

@@ -103,15 +103,15 @@ useEffect(() => {
         </div>
         <div className='grid grid-cols-12 px-3 w-full'>
             <h3 className='text-grayUpdated col-span-12 sm:col-span-2 sm:text-right font-semibold'>Author: </h3>
-            <p className='sm:col-span-10 col-span-12 sm:ml-5'>{exThesis?.author?.firstname} {exThesis?.author?.lastname}</p>
+            <p onClick={()=>navigate(`/user-theses/${exThesis.author.user_id}`)} className='sm:col-span-10 col-span-12 sm:ml-5 text-main transition hover:text-mainHover cursor-pointer '>{exThesis?.author?.firstname} {exThesis?.author?.lastname}</p>
         </div>
         <div className='grid grid-cols-12 px-3 w-full'>
             <h3 className='text-grayUpdated col-span-12 sm:col-span-2 sm:text-right font-semibold'>Supervisor: </h3>
-            <p className='sm:col-span-10 col-span-12 sm:ml-5'>{exThesis?.supervisor?.firstname} {exThesis?.supervisor?.lastname}</p>
+            <p onClick={()=>navigate(`/user-theses/${exThesis.supervisor.user_id}`)} className='sm:col-span-10 col-span-12 sm:ml-5 text-main transition hover:text-mainHover cursor-pointer '>{exThesis?.supervisor?.firstname} {exThesis?.supervisor?.lastname}</p>
         </div>
         <div className='grid grid-cols-12 px-3 w-full'>
             <h3 className='text-grayUpdated col-span-12 sm:col-span-2 sm:text-right font-semibold'>Co-supervisor: </h3>
-            <p className='sm:col-span-10 col-span-12 sm:ml-5'>{exThesis?.co_supervisor?.firstname} {exThesis?.co_supervisor?.lastname}</p>
+            <p onClick={()=>navigate(`/user-theses/${exThesis.co_supervisor.user_id}`)} className='sm:col-span-10 col-span-12 sm:ml-5 text-main transition hover:text-mainHover cursor-pointer '>{exThesis?.co_supervisor?.firstname} {exThesis?.co_supervisor?.lastname}</p>
         </div>
         <div className='grid grid-cols-12 px-3 w-full'>
             <h3 className='text-grayUpdated col-span-12 sm:col-span-2 sm:text-right font-semibold'>Date: </h3>

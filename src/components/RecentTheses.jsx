@@ -55,7 +55,7 @@ const RecentTheses = () => {
                 theses.sort((a, b) => new Date(b.submission_date) - new Date(a.submission_date)).slice(0,5).map((these,index)=>(
                     <tr key={these.thesis_id} class={`border-b ${index === 4 && 'border-b-0'} ${index % 2 === 0 ? 'bg-white' : 'bg-[rgba(0,0,0,0.03)]'}`}>
                     <td class="whitespace-nowrap px-6 py-4 font-semibold">{these.author.firstname} {these.author.lastname}</td>
-                    <td class="whitespace-nowrap px-6 py-4">{these.title}</td>
+                    <td class="whitespace-nowrap px-6 py-4">{these.title.length > 100 ?  these.title.slice(0,100) + '...' : these.title}</td>
                     <td class="whitespace-nowrap px-6 py-4">{these.university.university_name}</td>
                     <td class="whitespace-nowrap px-6 py-4">{formatDate(these.submission_date)}</td>
                     <td onClick={()=>navigate(`/thesis-detail/${these.thesis_id}`)} class="whitespace-nowrap px-6 py-4"><button style={{boxShadow: '0 2px 6px #acb5f6'}} className="bg-main font-semibold transition-all hover:bg-mainHover text-sm py-[.3rem] px-[.8rem] tracking-wide text-white rounded-[.25rem]">Detail</button></td>
