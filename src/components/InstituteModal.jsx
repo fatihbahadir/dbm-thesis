@@ -80,7 +80,6 @@ const InstituteModal = ({
         }
       )
       .then((res) => {
-        console.log(res);
         closeModal();
         setIsChanged(true);
         toast.success("Institute edited successfully !!");

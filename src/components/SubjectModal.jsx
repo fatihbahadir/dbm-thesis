@@ -74,7 +74,6 @@ const SubjectModal = ({ subject, closeModal, setIsChanged, isChanged }) => {
         }
       )
       .then((res) => {
-        console.log(res);
         closeModal();
         setIsChanged(true);
         toast.success("Subject edited successfully !!");

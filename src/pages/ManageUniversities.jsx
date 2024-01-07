@@ -25,7 +25,6 @@ const ManageUniversities = () => {
         },
       });
 
-      console.log(universityResponse.data.data);
       setThesisParams((prevParams) => ({
         ...prevParams,
         universities: universityResponse.data.data,

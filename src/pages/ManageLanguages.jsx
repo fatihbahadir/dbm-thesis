@@ -24,7 +24,6 @@ const ManageLanguages = () => {
         },
       });
 
-      console.log(languageResponse.data.data);
       setThesisParams((prevParams) => ({
         ...prevParams,
         languages: languageResponse.data.data,

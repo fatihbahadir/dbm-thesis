@@ -92,9 +92,7 @@ const Register = () => {
     })
   }
   
-  useEffect(()=>{
-    console.log(registerForm);
-  }, [registerForm])
+
 
 
   const handleInputChange = (e) => {

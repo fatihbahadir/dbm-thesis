@@ -79,7 +79,6 @@ const LanguageModal = ({
         }
       )
       .then((res) => {
-        console.log(res);
         closeModal();
         setIsChanged(true);
         toast.success("Thesis language edited successfully !!");

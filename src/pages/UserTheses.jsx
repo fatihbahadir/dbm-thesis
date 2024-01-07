@@ -22,7 +22,6 @@ const UserTheses = () => {
       },
   }).
   then((res)=>{
-    console.log(res.data.data)
     setUserTheses(res.data.data)
     setLoading(false);
     })

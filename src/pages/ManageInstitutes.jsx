@@ -25,7 +25,6 @@ const ManageInstitutes = () => {
         },
       });
 
-      console.log(instituteResponse.data.data);
       setThesisParams((prevParams) => ({
         ...prevParams,
         institutes: instituteResponse.data.data,

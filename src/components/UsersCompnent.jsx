@@ -20,7 +20,6 @@ const UsersComponent = () => {
     axios.get('/api/v1/user', {
       headers: { Authorization: `Bearer ${auth?.accessToken}` },  
     }).then((res)=>{
-      console.log(res)
       setUsers(res.data.data)
       setLoading(false)
     }).catch((err) => {

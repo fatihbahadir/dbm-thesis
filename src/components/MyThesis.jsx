@@ -9,22 +9,25 @@ import axios from "../api/axios";
 import useAuth from "../hooks/useAuth";
 import useThesis from '../hooks/useThesis';
 import LoadingSpinner from "./LoadingSpinner";
+import useUser from "../hooks/useUser";
 
 const MyThesis = () => {
     const { auth } = useAuth();
-    const {myThesis ,setMyThesis} = useThesis();
+    const {myTheses ,setMyTheses} = useThesis();
+    const { user } = useUser();
     const [thesesLength, setThesesLength] = useState();
     const [loading, setLoading] = useState(false);
     useEffect(()=>{
         setLoading(true)
-        axios.get('/api/v1/thesis/my', {
+   
+        axios.get(`/api/v1/thesis?author=true`, {
             headers: {
                 Authorization: `Bearer ${auth.accessToken}`,
             },
         }).
         then((res)=>{
           setThesesLength(res.data.data.length)
-          setMyThesis(res.data.data)
+          setMyTheses(res.data.data)
           setLoading(false);
           })
         .catch(err=>{

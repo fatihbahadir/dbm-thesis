@@ -48,7 +48,6 @@ const AddTypeModal = ({ closeModal, isChanged, setIsChanged }) => {
         }
       )
       .then((res) => {
-        console.log(res);
         closeModal();
         setIsChanged(true);
         toast.success("Type saved successfully !!");

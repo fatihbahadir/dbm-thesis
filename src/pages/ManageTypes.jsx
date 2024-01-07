@@ -24,7 +24,6 @@ const ManageTypes = () => {
         },
       });
 
-      console.log(typeResponse.data.data);
       setThesisParams((prevParams) => ({
         ...prevParams,
         types: typeResponse.data.data,

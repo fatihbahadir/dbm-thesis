@@ -36,7 +36,6 @@ const AddUniversityModal = ({ closeModal, isChanged, setIsChanged }) => {
         }
       )
       .then((res) => {
-        console.log(res);
         closeModal();
         setIsChanged(true);
         toast.success("University saved successfully !!");

@@ -36,7 +36,6 @@ const AddSubjectModal = ({ closeModal, isChanged, setIsChanged }) => {
         }
       )
       .then((res) => {
-        console.log(res);
         closeModal();
         setIsChanged(true);
         toast.success("Subject saved successfully !!");

@@ -80,7 +80,6 @@ const KeywordModal = ({
         }
       )
       .then((res) => {
-        console.log(res);
         closeModal();
         setIsChanged(true);
         toast.success("Keyword edited successfully !!");

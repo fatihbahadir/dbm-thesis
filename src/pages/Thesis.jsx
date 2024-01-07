@@ -33,7 +33,6 @@ const Thesis = () => {
         },
       })
       .then((res) => {
-        console.log(res.data.data);
         setTheses(res.data.data);
         setFilterLoading(false);
       })
@@ -155,7 +154,6 @@ const Thesis = () => {
         },
       });
 
-      console.log(subjectsResponse.data.data);
       setThesisParams((prevParams) => ({
         ...prevParams,
         subjects: subjectsResponse.data.data,
@@ -167,7 +165,6 @@ const Thesis = () => {
         },
       });
 
-      console.log(keywordsResponse.data.data);
       setThesisParams((prevParams) => ({
         ...prevParams,
         keywords: keywordsResponse.data.data,
@@ -179,7 +176,6 @@ const Thesis = () => {
         },
       });
 
-      console.log(universitiesResponse.data.data);
       setThesisParams((prevParams) => ({
         ...prevParams,
         universities: universitiesResponse.data.data,
@@ -191,7 +187,6 @@ const Thesis = () => {
         },
       });
 
-      console.log(instituteResponse.data.data);
       setThesisParams((prevParams) => ({
         ...prevParams,
         institutes: instituteResponse.data.data,
@@ -203,7 +198,6 @@ const Thesis = () => {
         },
       });
 
-      console.log(langaugeResponse.data.data);
       setThesisParams((prevParams) => ({
         ...prevParams,
         languages: langaugeResponse.data.data,
@@ -215,7 +209,6 @@ const Thesis = () => {
         },
       });
 
-      console.log(typeResponse.data.data);
       setThesisParams((prevParams) => ({
         ...prevParams,
         types: typeResponse.data.data,
@@ -243,18 +236,22 @@ const Thesis = () => {
           <input
             placeholder="Search..."
             value={title}
-            onChange={(e)=>{setTitle(e.target.value)}}
+            onChange={(e)=>{
+              setTitle(e.target.value)
+            }}
             className="bg-white border rounded outline-none transition-all focus:border-main h-[38px] py-3 px-5 w-full md:w-[350px] lg:w-[470px] font-semibold"
           />
           <button
             onClick={fetchFilteredTheses}
-            className="bg-main text-sm font-semibold tracking-wider hover:bg-mainHover transition text-white py-1 w-full md:w-auto md:px-12 lg:px-20 xl:px-28 2xl:px-32  h-[38px] rounded"
+            className="bg-main disabled:bg-gray-400 text-sm font-semibold tracking-wider hover:bg-mainHover transition text-white py-1 w-full md:w-auto md:px-12 lg:px-20 xl:px-28 2xl:px-32  h-[38px] rounded"
+            disabled={filterLoading}
           >
             Search
           </button>
           <button
             onClick={toggleFilters}
-            className="text-black whitespace-nowrap text-sm font-semibold tracking-wider transition border bg-gray-100 hover:bg-gray-200 w-full md:w-auto md:px-12 lg:px-20 xl:px-28 2xl:px-32  py-1  h-[38px] rounded"
+            disabled={filterLoading}
+            className="text-black disabled:bg-gray-400 disabled:text-white  whitespace-nowrap text-sm font-semibold tracking-wider transition border bg-gray-100 hover:bg-gray-200 w-full md:w-auto md:px-12 lg:px-20 xl:px-28 2xl:px-32  py-1  h-[38px] rounded"
           >
             {showFilters ? "Hide Filters" : "Show Filters"}
           </button>
@@ -289,6 +286,7 @@ const Thesis = () => {
                       className="form-checkbox h-3 w-3  text-gray-600 accent-main"
                       value={subject.subject_id}
                       checked={selectedSubjects.includes(subject.subject_id)}
+                      disabled={filterLoading}
                       onChange={(e) =>
                         handleCheckboxChange(
                           parseInt(e.target.value),
@@ -319,6 +317,7 @@ const Thesis = () => {
                       type="checkbox"
                       className="form-checkbox h-3 w-3 text-gray-600 accent-main"
                       value={keyword.keyword_id}
+                      disabled={filterLoading}
                       checked={selectedKeywords.includes(keyword.keyword_id)}
                       onChange={(e) =>
                         handleCheckboxChange(
@@ -351,6 +350,7 @@ const Thesis = () => {
                       type="checkbox"
                       className="form-checkbox h-3 w-3 accent-main"
                       value={university.university_id}
+                      disabled={filterLoading}
                       checked={selectedUniversities.includes(
                         university.university_id
                       )}
@@ -385,6 +385,7 @@ const Thesis = () => {
                       type="checkbox"
                       className="form-checkbox h-3 w-3 text-gray-600 accent-main"
                       value={institute.institute_id}
+                      disabled={filterLoading}
                       checked={selectedInstitutes.includes(
                         institute.institute_id
                       )}
@@ -419,6 +420,7 @@ const Thesis = () => {
                       type="checkbox"
                       className="form-checkbox h-3 w-3 text-gray-600 accent-main"
                       value={type.thesis_type_id}
+                      disabled={filterLoading}
                       checked={selectedTypes.includes(type.thesis_type_id)}
                       onChange={(e) =>
                         handleCheckboxChange(
@@ -451,6 +453,7 @@ const Thesis = () => {
                       type="checkbox"
                       className="form-checkbox h-3 w-3 text-gray-600 accent-main"
                       value={language.thesis_language_id}
+                      disabled={filterLoading}
                       checked={selectedLanguages.includes(
                         language.thesis_language_id
                       )}
@@ -493,6 +496,7 @@ const Thesis = () => {
             title.length === 0 ? (
             theses.map((these) => (
               <div
+                key={these.thesis_id}
                 onClick={() => navigate(`/thesis-detail/${these.thesis_id}`)}
                 className="hover:bg-gray-100 text-base w-full flex-col transition-all text-[#34395e] flex gap-3 p-5 cursor-pointer"
               >
@@ -505,7 +509,7 @@ const Thesis = () => {
                 {these.related_keywords.length > 0 && (
                   <div className="flex gap-1 items-center -mt-2">
                     {these.related_keywords.map((keyword) => (
-                      <span className="text-xs font-bold text-white bg-mainHover rounded p-1">
+                      <span key={keyword.keyword_id} className="text-xs font-bold text-white bg-mainHover rounded p-1">
                         {keyword.related_keyword}
                       </span>
                     ))}
@@ -538,6 +542,7 @@ const Thesis = () => {
           ) : filteredTheses.length > 0 ? (
             filteredTheses.map((these) => (
               <div
+                key={these.thesis_id}
                 onClick={() => navigate(`/thesis-detail/${these.thesis_id}`)}
                 className="hover:bg-gray-100 text-base w-full flex-col transition-all text-[#34395e] flex gap-3 p-5 cursor-pointer"
               >
@@ -550,7 +555,7 @@ const Thesis = () => {
                 {these.related_keywords.length > 0 && (
                   <div className="flex gap-1 items-center -mt-2">
                     {these.related_keywords.map((keyword) => (
-                      <span className="text-xs font-bold text-white bg-mainHover rounded p-1">
+                      <span key={keyword.keyword_id} className="text-xs font-bold text-white bg-mainHover rounded p-1">
                         {keyword.related_keyword}
                       </span>
                     ))}

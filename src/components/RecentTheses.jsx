@@ -25,26 +25,26 @@ const RecentTheses = () => {
           View More <FaArrowRight />
         </button>
       </div>
-      <div class="flex flex-col pb-3">
-        <div class="overflow-x-auto">
-          <div class="inline-block min-w-full">
-            <div class="overflow-hidden">
-              <table class="min-w-full text-left text-sm font-light">
-                <thead class="border-b bg-white font-medium">
+      <div className="flex flex-col pb-3">
+        <div className="overflow-x-auto">
+          <div className="inline-block min-w-full">
+            <div className="overflow-hidden">
+              <table className="min-w-full text-left text-sm font-light">
+                <thead className="border-b bg-white font-medium">
                   <tr className="text-[#717981] bg-[rgba(0,0,0,0.03)] font-bold">
-                    <th scope="col" class="px-6 py-4">
+                    <th scope="col" className="px-6 py-4">
                       Author
                     </th>
-                    <th scope="col" class="px-6 py-4">
+                    <th scope="col" className="px-6 py-4">
                       Title
                     </th>
-                    <th scope="col" class="px-6 py-4">
+                    <th scope="col" className="px-6 py-4">
                       University
                     </th>
-                    <th scope="col" class="px-6 py-4">
+                    <th scope="col" className="px-6 py-4">
                       Date
                     </th>
-                    <th scope="col" class="px-6 py-4">
+                    <th scope="col" className="px-6 py-4">
                       Action
                     </th>
                   </tr>
@@ -53,12 +53,12 @@ const RecentTheses = () => {
       
              {
                 theses.sort((a, b) => new Date(b.submission_date) - new Date(a.submission_date)).slice(0,5).map((these,index)=>(
-                    <tr key={these.thesis_id} class={`border-b ${index === 4 && 'border-b-0'} ${index % 2 === 0 ? 'bg-white' : 'bg-[rgba(0,0,0,0.03)]'}`}>
-                    <td class="whitespace-nowrap px-6 py-4 font-semibold">{these.author.firstname} {these.author.lastname}</td>
-                    <td class="whitespace-nowrap px-6 py-4">{these.title.length > 100 ?  these.title.slice(0,100) + '...' : these.title}</td>
-                    <td class="whitespace-nowrap px-6 py-4">{these.university.university_name}</td>
-                    <td class="whitespace-nowrap px-6 py-4">{formatDate(these.submission_date)}</td>
-                    <td onClick={()=>navigate(`/thesis-detail/${these.thesis_id}`)} class="whitespace-nowrap px-6 py-4"><button style={{boxShadow: '0 2px 6px #acb5f6'}} className="bg-main font-semibold transition-all hover:bg-mainHover text-sm py-[.3rem] px-[.8rem] tracking-wide text-white rounded-[.25rem]">Detail</button></td>
+                    <tr key={these.thesis_id} className={`border-b ${index === 4 && 'border-b-0'} ${index % 2 === 0 ? 'bg-white' : 'bg-[rgba(0,0,0,0.03)]'}`}>
+                    <td className="whitespace-nowrap px-6 py-4 font-semibold">{these.author.firstname} {these.author.lastname}</td>
+                    <td className="whitespace-nowrap px-6 py-4">{these.title.length > 100 ?  these.title.slice(0,100) + '...' : these.title}</td>
+                    <td className="whitespace-nowrap px-6 py-4">{these.university.university_name}</td>
+                    <td className="whitespace-nowrap px-6 py-4">{formatDate(these.submission_date)}</td>
+                    <td onClick={()=>navigate(`/thesis-detail/${these.thesis_id}`)} className="whitespace-nowrap px-6 py-4"><button style={{boxShadow: '0 2px 6px #acb5f6'}} className="bg-main font-semibold transition-all hover:bg-mainHover text-sm py-[.3rem] px-[.8rem] tracking-wide text-white rounded-[.25rem]">Detail</button></td>
 
                   </tr>
                 ))

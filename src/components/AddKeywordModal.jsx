@@ -34,7 +34,7 @@ const AddKeywordModal = ({ closeModal, isChanged, setIsChanged }) => {
             }
           )
           .then((res) => {
-            console.log(res);
+            ;
             closeModal();
             setIsChanged(true);
             toast.success("Keyword saved successfully !!");

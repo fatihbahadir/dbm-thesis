@@ -186,7 +186,6 @@ const ThesisModal = ({ thesis, closeModal, isChanged, setIsChanged }) => {
         },
       });
 
-      console.log(keywordsResponse.data.data);
       setThesisParams((prevParams) => ({
         ...prevParams,
         keywords: keywordsResponse.data.data,
@@ -201,14 +200,13 @@ const ThesisModal = ({ thesis, closeModal, isChanged, setIsChanged }) => {
   useOutsideAlerter(modalRef);
   return (
     <div className="fixed top-0 left-0 w-full h-full flex justify-center items-center bg-black bg-opacity-50 px-2">
-      <div ref={modalRef} className="bg-white rounded-lg p-8 ">
-        {/* Modal içeriği */}
+      <div ref={modalRef} className="bg-white rounded-lg p-8 md:w-[70%] z-[999] ">
         <h2 onClick={()=>navigate(`/thesis-detail/${thesis.thesis_id}`)} className="text-lg font-bold border-b tailwind-auto-border border-main transition hover:text-main cursor-pointer">
           {thesis.title}
         </h2>
         <div className="mt-5 flex flex-col gap-2 ">
           <h2 className="font-semibold text-grayUpdated">Keywords</h2>
-          <div className="flex gap-3 items-center flex-wrap">
+          <div className="flex gap-3 items-center flex-wrap max-h-[60px] md:max-h-[100px] p-3 overflow-scroll">
             {relatedInThesis.map((keyword) => (
               <div onClick={()=>removeKeywordFromThesis(keyword.keyword_id)} className="relative group cursor-pointer">
                 <div className="absolute -top-2 -right-2 z-[2]">
@@ -233,7 +231,7 @@ const ThesisModal = ({ thesis, closeModal, isChanged, setIsChanged }) => {
         </div>
         <div className="mt-5 flex flex-col gap-2 ">
           <h2 className="font-semibold text-grayUpdated">Subjects</h2>
-          <div className="flex gap-3 items-center flex-wrap">
+          <div className="flex gap-3 items-center flex-wrap max-h-[60px] md:max-h-[100px] p-3 overflow-scroll">
             {relatedSubjectInThesis.map((subject) => (
               <div onClick={()=>removeSubjectFromThesis(subject.subject_id)} className="relative group cursor-pointer">
                 <div className="absolute -top-2 -right-2 z-[2]">

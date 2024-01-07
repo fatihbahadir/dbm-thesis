@@ -25,7 +25,6 @@ const ManageSubjects = () => {
         },
       });
 
-      console.log(subjectResponse.data.data);
       setThesisParams((prevParams) => ({
         ...prevParams,
         subjects: subjectResponse.data.data,

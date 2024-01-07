@@ -61,7 +61,7 @@ const Profile = () => {
         <div className="greeting mt-5 lg:mt-10 mb-10">
             <div className="mt-3 pt-3 flex items-center gap-4">
                 <div className="box w-[33px] h-[8px] bg-[#6777ef] rounded-xl"></div>
-                <h2 class="section-title text-xl">Hi, {user?.firstname} {user?.lastname} !</h2>
+                <h2 className="section-title text-xl">Hi, {user?.firstname} {user?.lastname} !</h2>
             </div>
             <p className="mx-[50px] my-2 max-w-[380px] text-slate-400 font-thin text-sm">{randomPhrase()}</p>
         </div>
@@ -72,7 +72,7 @@ const Profile = () => {
                 <div className="flex items-center">
 
                     <div>
-                        <img src={Avatar} class="mr-[.5rem] align-middle w-[100px] h-[100px] shadow-xl" alt="Avatar" />
+                        <img src={Avatar} className="mr-[.5rem] align-middle w-[100px] h-[100px] shadow-xl" alt="Avatar" />
                         <p className="mt-2 text-[10px] italic underline text-slate-400">Change Photo</p>
                     </div>
 
@@ -88,13 +88,13 @@ const Profile = () => {
 
                     <div className="flex items-center gap-10">
                         <div className="">
-                            <img src={Avatar} class="mr-[.5rem] align-middle w-[100px] h-[100px] rounded-full shadow-xl" alt="Avatar" />
+                            <img src={Avatar} className="mr-[.5rem] align-middle w-[100px] h-[100px] rounded-full shadow-xl" alt="Avatar" />
                         </div>
                         <div className="">
-                            <img src={Avatar} class="mr-[.5rem] align-middle w-[60px] h-[60px] rounded-full shadow-xl" alt="Avatar" />
+                            <img src={Avatar} className="mr-[.5rem] align-middle w-[60px] h-[60px] rounded-full shadow-xl" alt="Avatar" />
                         </div>
                         <div className="">
-                            <img src={Avatar} class="mr-[.5rem] align-middle w-[40px] h-[40px] rounded-full shadow-xl" alt="Avatar" />
+                            <img src={Avatar} className="mr-[.5rem] align-middle w-[40px] h-[40px] rounded-full shadow-xl" alt="Avatar" />
                         </div>
                     </div>
 

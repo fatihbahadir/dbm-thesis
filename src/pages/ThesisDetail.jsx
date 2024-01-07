@@ -66,7 +66,7 @@ useEffect(() => {
             {exThesis?.related_keywords?.length > 0 && (
                     <div className="flex gap-1 flex-wrap items-center sm:col-span-10 col-span-12 sm:ml-5">
                       {exThesis?.related_keywords.map((keyword) => (
-                        <span className="text-xs font-bold text-white bg-mainHover rounded p-1">
+                        <span key={keyword.keyword_id} className="text-xs font-bold text-white bg-mainHover rounded p-1">
                           {keyword.related_keyword}
                         </span>
                       ))}
@@ -78,7 +78,7 @@ useEffect(() => {
             {exThesis?.subjects?.length > 0 && (
                     <div className="flex gap-1 flex-wrap items-center sm:col-span-10 col-span-12 sm:ml-5">
                       {exThesis?.subjects?.map((subject) => (
-                        <span className="text-xs font-bold text-white bg-mainHover rounded p-1">
+                        <span key={subject.subject_id} className="text-xs font-bold text-white bg-mainHover rounded p-1">
                           {subject.subject_name}
                         </span>
                       ))}

@@ -81,7 +81,6 @@ const UniversityModal = ({
         }
       )
       .then((res) => {
-        console.log(res);
         closeModal();
         setIsChanged(true);
         toast.success("University edited successfully !!");

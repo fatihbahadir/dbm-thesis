@@ -36,7 +36,6 @@ const AddInstituteModal = ({ closeModal, isChanged, setIsChanged }) => {
         }
       )
       .then((res) => {
-        console.log(res);
         closeModal();
         setIsChanged(true);
         toast.success("Institute saved successfully !!");

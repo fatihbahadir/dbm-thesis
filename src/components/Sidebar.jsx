@@ -16,7 +16,6 @@ const Sidebar = ({toggle, setToggle}) => {
   useEffect(() => {
     setToggle(true);
     setActive(location.pathname);
-    console.log(user)
   }, [location]);
 
   useEffect(()=> {

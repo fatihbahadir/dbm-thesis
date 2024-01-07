@@ -48,7 +48,6 @@ const AddProfessionModal = ({closeModal, setIsChanged, isChanged}) => {
       }
     )
     .then((res) => {
-      console.log(res);
       closeModal();
       setIsChanged(true)
       toast.success('Profession saved successfully !!')

@@ -31,7 +31,6 @@ const getThesis = () => {
     },
 }).
 then((res)=>{
-  console.log(res.data.data)
   setTheses(res.data.data)
   setLoading(false);
   })

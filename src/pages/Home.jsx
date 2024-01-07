@@ -28,7 +28,6 @@ const Home = () => {
         },
       })
       .then((res) => {
-        console.log(res.data.data);
         setTheses(res.data.data);
         
         return axios.get("/api/v1/thesis?random=3", {
@@ -38,7 +37,6 @@ const Home = () => {
         });
       })
       .then((randomRes) => {
-        console.log(randomRes.data.data);
         setThreeTheses(randomRes.data.data);
         setLoading(false);
       })

@@ -55,9 +55,7 @@ const Login = () => {
         }
       );
       const accessToken = response?.data?.access_token;
-      console.log(accessToken);
       setAuth({ user, accessToken });
-      console.log("auth", auth);
       setLoading(false);
       navigate(from, { replace: true });
     } catch (err) {

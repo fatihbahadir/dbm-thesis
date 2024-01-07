@@ -89,7 +89,6 @@ const ProfessionModal = ({
         }
       )
       .then((res) => {
-        console.log(res);
         closeModal();
         setIsChanged(true)
         toast.success('Profession edited successfully !!')

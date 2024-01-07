@@ -25,7 +25,6 @@ const ManageKeywords = () => {
         },
       });
 
-      console.log(keywordResponse.data.data);
       setThesisParams((prevParams) => ({
         ...prevParams,
         keywords: keywordResponse.data.data,

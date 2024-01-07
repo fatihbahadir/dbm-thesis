@@ -66,7 +66,6 @@ const AddNewThesis = () => {
         },
       });
 
-      console.log(subjectsResponse.data.data);
       setThesisParams((prevParams) => ({
         ...prevParams,
         subjects: subjectsResponse.data.data,
@@ -78,7 +77,6 @@ const AddNewThesis = () => {
         },
       });
 
-      console.log(keywordsResponse.data.data);
       setThesisParams((prevParams) => ({
         ...prevParams,
         keywords: keywordsResponse.data.data,
@@ -90,7 +88,7 @@ const AddNewThesis = () => {
         },
       });
 
-      console.log(universitiesResponse.data.data);
+      
       setThesisParams((prevParams) => ({
         ...prevParams,
         universities: universitiesResponse.data.data,
@@ -102,7 +100,7 @@ const AddNewThesis = () => {
         },
       });
 
-      console.log(instituteResponse.data.data);
+      
       setThesisParams((prevParams) => ({
         ...prevParams,
         institutes: instituteResponse.data.data,
@@ -114,7 +112,7 @@ const AddNewThesis = () => {
         },
       });
 
-      console.log(langaugeResponse.data.data);
+      
       setThesisParams((prevParams) => ({
         ...prevParams,
         languages: langaugeResponse.data.data,
@@ -126,7 +124,7 @@ const AddNewThesis = () => {
         },
       });
 
-      console.log(typeResponse.data.data);
+      
       setThesisParams((prevParams) => ({
         ...prevParams,
         types: typeResponse.data.data,
@@ -194,7 +192,7 @@ const AddNewThesis = () => {
         return
       }
 
-      console.log(formData, selectedKeywords, selectedSubjects)
+      
 
       axios
       .post(
@@ -223,7 +221,6 @@ const AddNewThesis = () => {
         }
       )
       .then((res) => {
-        console.log(res);
         setFormData({
           thesisNo: '',
           title: '',
@@ -257,9 +254,7 @@ const AddNewThesis = () => {
     getUsers();
   }, [])
 
-  useEffect(()=>{
-    console.log(formData)
-  }, [formData])
+
 
   return (
     <div className="w-full h-full flex pt-12 md:px-24">
@@ -510,7 +505,7 @@ const AddNewThesis = () => {
             <div className="col-span-12 md:col-span-3 text-left md:text-right pr-12">
               <label className="font-semibold">Related Keywords</label>
             </div>
-            <div className="col-span-12 md:col-span-7 md:px-3 mt-3 md:mt-0">
+            <div className="col-span-12 md:col-span-7 md:px-3 mt-3 md:mt-0 max-h-[300px] overflow-scroll">
             {thesisParams.keywords.map((keyword) => (
               <label
                 key={keyword.keyword_id}
@@ -541,7 +536,7 @@ const AddNewThesis = () => {
             <div className="col-span-12 md:col-span-3 text-left md:text-right pr-12">
               <label className="font-semibold">Subjects</label>
             </div>
-            <div className="col-span-12 md:col-span-7 md:px-3 mt-3 md:mt-0">
+            <div className="col-span-12 md:col-span-7 md:px-3 mt-3 md:mt-0 max-h-[300px] overflow-scroll">
             {thesisParams.subjects.map((subject) => (
               <label
                 key={subject.subject_id}
