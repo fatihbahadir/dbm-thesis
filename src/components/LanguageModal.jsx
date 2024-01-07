@@ -99,7 +99,7 @@ const LanguageModal = ({
     <div ref={modalRef} className="bg-white rounded-lg p-8 ">
       <div className="flex justify-between items-center">
         <h2 className="text-lg font-bold border-b tailwind-auto-border border-main transition">
-          Edit Thesis Type
+          Edit Thesis Language
         </h2>
         <FaEdit
           onClick={() => setDisabled(!disabled)}
