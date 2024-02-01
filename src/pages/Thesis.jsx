@@ -239,6 +239,7 @@ const Thesis = () => {
             onChange={(e)=>{
               setTitle(e.target.value)
             }}
+            disabled
             className="bg-white border rounded outline-none transition-all focus:border-main h-[38px] py-3 px-5 w-full md:w-[350px] lg:w-[470px] font-semibold"
           />
           <button
