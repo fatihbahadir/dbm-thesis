@@ -453,7 +453,7 @@ const Thesis = () => {
                       type="checkbox"
                       className="form-checkbox h-3 w-3 text-gray-600 accent-main"
                       value={language.thesis_language_id}
-                      disabled={filterLoading}
+                      disabled={true}
                       checked={selectedLanguages.includes(
                         language.thesis_language_id
                       )}
